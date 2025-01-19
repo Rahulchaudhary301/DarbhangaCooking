@@ -114,8 +114,10 @@ const getAllOrder = async (req, res) => {
     try {
         const { mobile } = req.body
 
-       
-        const data= await OrderModel.find().sort({ createdAt: -1 });
+        // console.log(mobile)
+
+       // const data = await OrderModel.find({ mobile: mobile })
+         const data= await OrderModel.find().sort({ createdAt: -1 });
         res.status(201).send({ status: true, data: data })
     }
 
@@ -136,7 +138,12 @@ const getAllOrderWithSameNumber = async (req, res) => {
 
     try {
 
-        const data = await OrderModel.find().sort({ createdAt: -1 });
+        const { mobile } = req.body
+        // console.log(mobile)
+
+        const data = await OrderModel.find({ mobile: mobile })
+
+      //  const data = await OrderModel.find().sort({ createdAt: -1 });
         res.status(201).send({ status: true, data: data })
     }
 
