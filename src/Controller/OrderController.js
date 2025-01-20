@@ -139,9 +139,9 @@ const getAllOrderWithSameNumber = async (req, res) => {
     try {
 
         const { mobile } = req.body
-        // console.log(mobile)
+       //  console.log(mobile , 'hellow')
 
-        const data = await OrderModel.find({ mobile: mobile })
+        const data = await OrderModel.find({ mobile: mobile }).sort({ createdAt: -1 });
 
       //  const data = await OrderModel.find().sort({ createdAt: -1 });
         res.status(201).send({ status: true, data: data })
