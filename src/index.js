@@ -1,15 +1,24 @@
 const express= require("express")
+const app= express()
+const {config}=require('dotenv')
 const route= require("../src/route/routes")
 const {default:mongoose}= require("mongoose")
 const multer=require("multer")
-const cors = require('cors')
 
-const app= express()
+
+const cors=require('cors')
+
+config({path:"../config/config.env"})
+
+
+
+
 
 app.use(express.json())
 app.use(cors())
 
-mongoose.connect("mongodb+srv://RahulChaudhary:Rahul321@cluster1.42h1ws9.mongodb.net/DarbhangaCooking?retryWrites=true&w=majority",{
+
+mongoose.connect(`mongodb+srv://RahulChaudhary:${process.env.MONGO_DB}.mongodb.net/DarbhangaCooking?retryWrites=true&w=majority`,{
     useNewUrlParser: true
 })
 .then(()=> console.log("mongoDB is connected"))

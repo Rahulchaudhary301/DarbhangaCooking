@@ -4,6 +4,8 @@ const ItemController =require('../Controller/ItemController')
 const OrderController = require('../Controller/OrderController')
 const OrderItemListController = require('../Controller/OrederListItemController')
 const AllModelController = require('../Controller/AllModelController')
+const ContactController = require('../Controller/ContactController')
+
 const router= express.Router()
 
 //const middleware= require("../middleware/middleware")
@@ -18,6 +20,8 @@ router.get("/", function(req,res){
 
 
 
+
+router.post("/contact",ContactController.FormData)
 
 router.post("/register",UserController.userCrete)
 
