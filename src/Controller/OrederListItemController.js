@@ -39,6 +39,7 @@ const OrderListItem = async (req, res) => {
 
         // Save the new order
         const savedOrder = await OrderListItemModel.create(order);
+       // console.log(savedOrder)
 
         res.status(201).send({
             status: true,

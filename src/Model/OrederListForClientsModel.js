@@ -146,12 +146,14 @@ const UtensilSchema = new mongoose.Schema({
 const RawDataListSchema = new mongoose.Schema({
     name: { type: String, required: true },
     unit: { type: String, required: true },
+    quantity: { type: String, required: true },
     belog: { type: String, required: true }, // E.g., "kirana"
 });
 
 // Schema for masala data details
 const MasalaDataListSchema = new mongoose.Schema({
     name: { type: String, required: true },
+     quantity: { type: String, required: true },
     unit: { type: String, required: true },
     belog: { type: String, required: true }, // E.g., "kirana"
 });
@@ -181,6 +183,7 @@ const OrderCategorySchema = new mongoose.Schema({
 
 const KiranaPdfItemSchema = new mongoose.Schema({
     name: { type: String, required: true }, // Item name
+     quantity: { type: String, required: true },
     unit: { type: String, required: true }, // Unit of measurement (e.g., kg, gram)
     belog: { type: String, required: true }, // Belongs to category (e.g., "kirana")
 });
@@ -188,18 +191,21 @@ const KiranaPdfItemSchema = new mongoose.Schema({
 
 const VegatablePdfItemSchema = new mongoose.Schema({
     name: { type: String, required: true }, // Item name
+     quantity: { type: String, required: true },
     unit: { type: String, required: true }, // Unit of measurement (e.g., kg, gram)
     belog: { type: String, required: true }, // Belongs to category (e.g., "kirana")
 });
 
 const FruitsPdfItemSchema = new mongoose.Schema({
     name: { type: String, required: true }, // Item name
+     quantity: { type: String, required: true },
     unit: { type: String, required: true }, // Unit of measurement (e.g., kg, gram)
     belog: { type: String, required: true }, // Belongs to category (e.g., "kirana")
 });
 
 const MilkPdfItemSchema = new mongoose.Schema({
     name: { type: String, required: true }, // Item name
+     quantity: { type: String, required: true },
     unit: { type: String, required: true }, // Unit of measurement (e.g., kg, gram)
     belog: { type: String, required: true }, // Belongs to category (e.g., "kirana")
 });

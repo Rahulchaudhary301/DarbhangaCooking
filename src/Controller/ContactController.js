@@ -16,6 +16,7 @@ const FormData = async (req, res) => {
     try {
         const {name, email , message} = req.body;
          
+        console.log(req.body)
         
         const transporter = nodemailer.createTransport({
            // host: 'smtp.ethereal.email',
@@ -54,8 +55,12 @@ const FormData = async (req, res) => {
         });
 
 
+        console.log(info.messageId)
+        
         res.status(201).send({ status: true, data: info.messageId });
     } catch (err) {
+         console.log(err.message)
+         
         res.status(500).send({ status: false, msg: err.message });
     }
 }
