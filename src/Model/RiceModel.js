@@ -13,6 +13,10 @@ const Rice = new mongoose.Schema({
         type: String,
         required: true,
     },
+    category: {
+        type: String,
+        required: true,
+    },
     range: {
         type: [String], // Array of strings for ranges like "100-150"
         required: true,
