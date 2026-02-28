@@ -163,6 +163,7 @@ const ItemSchema = new mongoose.Schema({
     img: { type: String, required: true },
     optionButton: { type: Boolean, default: false },
     name: { type: String, required: true },
+    category: { type: String, required: true},
     range: { type: [String], required: true },
     selecte: { type: Boolean, default: false },
     member: { type: String, required: true },
