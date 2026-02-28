@@ -1,6 +1,8 @@
 
 const { default: mongoose } = require('mongoose');
-const OrderListItemModel =require('../Model/OrederListForClientsModel')
+const OrderListItemModel = require('../Model/OrederListForClientsModel')
+const RiceModel =require('../Model/RiceModel')
+const OrderModel = require('../Model/OrderScema')
 
 
 
@@ -32,14 +34,14 @@ const OrderListItem = async (req, res) => {
         order.id = new mongoose.Types.ObjectId(id);
 
         // Log the incoming order
-      //  console.log(order);
+        //  console.log(order);
 
         // Delete any existing orders with the same mobile and id
         await OrderListItemModel.deleteMany({ mobile: mobile, id: id });
 
         // Save the new order
         const savedOrder = await OrderListItemModel.create(order);
-       // console.log(savedOrder)
+        // console.log(savedOrder)
 
         res.status(201).send({
             status: true,
@@ -76,19 +78,19 @@ const OrderListItem = async (req, res) => {
 
 
 
-const getOrderListFromOwner=async(req,res)=>{
+const getOrderListFromOwner = async (req, res) => {
 
     try {
 
-        const {mobile , id} = req.body
+        const { mobile, id } = req.body
 
-       // console.log(mobile)
-        
-       const data = await OrderListItemModel.find({id:id});
+        // console.log(mobile)
 
-       //  console.log(id, data)
+        const data = await OrderListItemModel.find({ id: id });
 
-         res.status(201).send({ status: true, data: data })
+        //  console.log(id, data)
+
+        res.status(201).send({ status: true, data: data })
     }
 
     catch (err) {
@@ -103,4 +105,201 @@ const getOrderListFromOwner=async(req,res)=>{
 
 
 
-module.exports={OrderListItem , getOrderListFromOwner}
+
+const RiceUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Rice" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+const DallUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Dall" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+
+
+const VegetableUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Vegetable" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+const RotiUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Roti" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = { OrderListItem, getOrderListFromOwner , RiceUpdateData  , DallUpdateData , VegetableUpdateData , RotiUpdateData}

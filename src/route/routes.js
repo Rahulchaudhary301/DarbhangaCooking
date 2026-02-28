@@ -88,6 +88,16 @@ router.post("/emptyCart",AllModelController.DeleteAll)
 
 
 
+router.put("/RiceListUpdate",OrderItemListController.RiceUpdateData)
+router.put("/DallListUpdate",OrderItemListController.DallUpdateData)
+router.put("/VegetableListUpdate",OrderItemListController.VegetableUpdateData)
+router.put("/RotiListUpdate",OrderItemListController.RotiUpdateData)
+
+
+
+
+
+
 
 //router.post("/books",middleware.authenticate,BooksController.createBooks)
 //router.get("/books",BooksController.getBooksData)

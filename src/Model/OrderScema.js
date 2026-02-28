@@ -1,5 +1,28 @@
 const mongoose = require("mongoose");
 
+
+
+
+
+// Schema for raw data details
+const RawDataListSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    unit: { type: String, required: true },
+    quantity: { type: String, required: true },
+    belog: { type: String, required: true }, // E.g., "kirana"
+});
+
+// Schema for masala data details
+const MasalaDataListSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+     quantity: { type: String, required: true },
+    unit: { type: String, required: true },
+    belog: { type: String, required: true }, // E.g., "kirana"
+});
+
+
+
+
 // Define the schema for an individual item
 const ItemSchema = new mongoose.Schema({
     img: { type: String, required: true },
@@ -8,8 +31,10 @@ const ItemSchema = new mongoose.Schema({
     range: { type: [String], required: true },
     selecte: { type: Boolean, default: false },
     member: { type: String, required: true },
-    RawDataList: { type: [String], default: [] },
-    MasalaDataList: { type: [String], default: [] },
+   // RawDataList: { type: [String], default: [] },
+   // MasalaDataList: { type: [String], default: [] },
+    RawDataList: { type: [RawDataListSchema], default: [] }, // Using raw data details schema
+    MasalaDataList: { type: [MasalaDataListSchema], default: [] }, // Using masala data details schema
     RawData: { type: [String], required: true },
     MashalaData: { type: [String], required: true },
     RawDataUnit: { type: [String], required: true },

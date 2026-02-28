@@ -175,7 +175,7 @@ const getOrderByNumber = async (req, res) => {
 
         const data = await OrderModel.find({ mobile: mobile, _id: id });
 
-          console.log(id ,data)
+        //  console.log(id ,data)
 
         res.status(201).send({ status: true, data: data })
     }
@@ -187,6 +187,21 @@ const getOrderByNumber = async (req, res) => {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -650,7 +665,7 @@ const DeleteOrderWithMobileNumberAndId = async (req, res) => {
 
 
 module.exports = {
-    OrderData, getAllOrder, getOrderByNumber, requestForUpdateByNumber, CheckPermission, OrderDataUpdateExtingId, DeleteOrderWithMobileNumberAndId,
+    OrderData, getAllOrder, getOrderByNumber, requestForUpdateByNumber, CheckPermission, OrderDataUpdateExtingId, DeleteOrderWithMobileNumberAndId, 
 
     permissionGrant, requestForOderPreairedStatus, PermissionNewOrder, requestForOderPreairedStatusFalse, getAllOrderWithSameNumber, CancelOrderSumited, PermissionForCancelOrber, NotAcceptOrderRequest, DeleteOrderWithMobileNumber
 }
