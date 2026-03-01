@@ -41,12 +41,12 @@ const ContractorUserLogin = async (req, res) => {
     try {
         const data = req.body;
 
-        const {  mobile, password  } = data
+        const {  password, id } = data
 
 
-        const IsMobile = await ContractorModel.findOne({ mobile: mobile })
+        const IsMobile = await ContractorModel.findOne({ _id: id })
 
-        if (!IsMobile) return res.status(400).send({ status: false, msg: "This mobile number not exist on DataBase" })
+        if (!IsMobile) return res.status(400).send({ status: false, msg: "This Contractor Id is not Valid" })
         if (IsMobile.password !== password) return res.status(400).send({ status: false, msg: "Wrong PassWord" })
 
         const token = jwt.sign({ userId: IsMobile._id }, 'Secret-Key')
