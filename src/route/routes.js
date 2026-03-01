@@ -5,6 +5,7 @@ const OrderController = require('../Controller/OrderController')
 const OrderItemListController = require('../Controller/OrederListItemController')
 const AllModelController = require('../Controller/AllModelController')
 const ContactController = require('../Controller/ContactController')
+const { ContractorUserCrete, ContractorUserLogin } = require("../Controller/ContractorController")
 
 const router= express.Router()
 
@@ -94,6 +95,10 @@ router.put("/VegetableListUpdate",OrderItemListController.VegetableUpdateData)
 router.put("/RotiListUpdate",OrderItemListController.RotiUpdateData)
 
 
+
+
+router.post("/ContractorRegister",ContractorUserCrete)
+router.post("/ContractorLogin",ContractorUserLogin)
 
 
 
