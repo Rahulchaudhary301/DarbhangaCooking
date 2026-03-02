@@ -130,6 +130,32 @@ const ContractorOrderData = async (req, res) => {
 
 
 
+const CancelContractorOrder = async (req, res) => {
+    try {
+        const order = req.body;
+    
+        if (!order) {
+            return res.status(400).send({
+                status: false,
+                message: "Order must Required"
+            });
+        }
+
+
+         // Find and update the document
+                const updatedData = await OrderModel.findOneAndUpdate(
+                    {ContractorIdd : order.ContractorIdd }, // Filter by mobile number and ID
+                    { $set: { ContractorSendTo: false, ContractorName:"" ,
+                            ContractorMobile:"" , ContractorIdd:"" } }, // Update fields
+                    { new: true } 
+                );
+
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully", });
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
 
 
 
@@ -141,4 +167,12 @@ const ContractorOrderData = async (req, res) => {
 
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor , ContractorOrderData}
+
+
+
+
+
+
+
+
+module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor , ContractorOrderData , CancelContractorOrder}
