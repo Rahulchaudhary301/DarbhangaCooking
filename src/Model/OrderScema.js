@@ -66,9 +66,9 @@ const OrderSchema = new mongoose.Schema({
     SelectedLocation:{ type: String, required: true },
     SelectedTime: { type: String, required: true },
     OrderType: { type: String, required: true },
-    ContractorIdd: { type: String, required: true },
-    ContractorName: { type: String, required: true },
-    ContractorMobile: { type: String, required: true },
+    ContractorIdd: { type: String },
+    ContractorName: { type: String },
+    ContractorMobile: { type: String  },
     ContractorSendTo: { type: Boolean, required: true },
     
 

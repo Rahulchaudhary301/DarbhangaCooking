@@ -13,6 +13,7 @@ const OrderData = async (req, res) => {
     try {
         const order = req.body;
 
+
         // Check if the mobile number exists in the request
         if (!order.mobile) {
             return res.status(400).send({
