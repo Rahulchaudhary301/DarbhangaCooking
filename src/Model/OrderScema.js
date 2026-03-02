@@ -66,6 +66,11 @@ const OrderSchema = new mongoose.Schema({
     SelectedLocation:{ type: String, required: true },
     SelectedTime: { type: String, required: true },
     OrderType: { type: String, required: true },
+    ContractorIdd: { type: String, required: true },
+    ContractorName: { type: String, required: true },
+    ContractorMobile: { type: String, required: true },
+    ContractorSendTo: { type: Boolean, required: true },
+    
 
     orderItem: { type: [OrderCategorySchema], required: true }, // List of categories and their items
 }, { timestamps: true });

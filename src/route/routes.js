@@ -5,7 +5,7 @@ const OrderController = require('../Controller/OrderController')
 const OrderItemListController = require('../Controller/OrederListItemController')
 const AllModelController = require('../Controller/AllModelController')
 const ContactController = require('../Controller/ContactController')
-const { ContractorUserCrete, ContractorUserLogin, getAllContractor } = require("../Controller/ContractorController")
+const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOrderData } = require("../Controller/ContractorController")
 
 const router= express.Router()
 
@@ -100,7 +100,7 @@ router.put("/RotiListUpdate",OrderItemListController.RotiUpdateData)
 router.post("/ContractorRegister",ContractorUserCrete)
 router.post("/ContractorLogin",ContractorUserLogin)
 router.get("/getAllContractor", getAllContractor)
-
+router.post("/sendContractorOrder",ContractorOrderData)
 
 
 

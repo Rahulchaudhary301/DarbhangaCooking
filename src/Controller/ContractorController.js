@@ -1,4 +1,5 @@
 const ContractorModel = require('../Model/ContractorModel')
+const ContractorOrderModel = require('../Model/ContractorOrderModel')
 const jwt = require('jsonwebtoken')
 
 
@@ -94,6 +95,40 @@ const getAllContractor = async (req, res) => {
 
 
 
+const ContractorOrderData = async (req, res) => {
+    try {
+        const order = req.body;
+    
+        if (!order) {
+            return res.status(400).send({
+                status: false,
+                message: "Order must Required"
+            });
+        }
+
+        // Save the new order
+        await ContractorOrderModel.create(order.data);
+
+        res.status(201).send({ status: true, message: "Order Send Contractor successfully", });
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor , ContractorOrderData}
