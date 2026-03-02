@@ -1,5 +1,6 @@
 const ContractorModel = require('../Model/ContractorModel')
 const ContractorOrderModel = require('../Model/ContractorOrderModel')
+const OrderModel = require('../Model/OrderScema')
 const jwt = require('jsonwebtoken')
 
 
@@ -105,6 +106,15 @@ const ContractorOrderData = async (req, res) => {
                 message: "Order must Required"
             });
         }
+
+
+         // Find and update the document
+                const updatedData = await OrderModel.findOneAndUpdate(
+                    { mobile: order.data.mobile, _id: order.data._id }, // Filter by mobile number and ID
+                    { $set: { ContractorSendTo: true, ContractorName:order.ContractorName ,
+                            ContractorMobile:order.ContractorMobile , ContractorIdd:order.ContractorIdd } }, // Update fields
+                    { new: true } 
+                );
 
         // Save the new order
         await ContractorOrderModel.create(order.data);

@@ -69,6 +69,7 @@ const OrderSchema = new mongoose.Schema({
     ContractorIdd: { type: String },
     ContractorName: { type: String },
     ContractorMobile: { type: String  },
+    ContractorAddress: { type: String  },
     ContractorSendTo: { type: Boolean, required: true },
     
 
