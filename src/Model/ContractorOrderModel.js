@@ -50,7 +50,7 @@ const OrderCategorySchema = new mongoose.Schema({
 
 
 // Define the main schema for the user order
-const OrderSchema = new mongoose.Schema({
+const ContractorOrderSchema = new mongoose.Schema({
     name: { type: String, required: true },
     mobile: { type: String, required: true },
     clientRequest: { type: Boolean, required: true },
@@ -66,11 +66,13 @@ const OrderSchema = new mongoose.Schema({
     SelectedLocation:{ type: String, required: true },
     SelectedTime: { type: String, required: true },
     OrderType: { type: String, required: true },
+    ContractorId: { type: String, required: true },
+    
 
     orderItem: { type: [OrderCategorySchema], required: true }, // List of categories and their items
 }, { timestamps: true });
 
 // Create the Mongoose model
-const OrderModel = mongoose.model("Order", OrderSchema);
+const ContractorOrder = mongoose.model("ContractorOrder", ContractorOrderSchema);
 
-module.exports = OrderModel;
+module.exports = ContractorOrder;
