@@ -112,7 +112,8 @@ const ContractorOrderData = async (req, res) => {
                 const updatedData = await OrderModel.findOneAndUpdate(
                     { mobile: order.data.mobile, _id: order.data._id }, // Filter by mobile number and ID
                     { $set: { ContractorSendTo: true, ContractorName:order.ContractorName ,
-                            ContractorMobile:order.ContractorMobile , ContractorIdd:order.ContractorIdd } }, // Update fields
+                            ContractorMobile:order.ContractorMobile , ContractorIdd:order.ContractorIdd , 
+                           ContractorAddress:order.ContractorAddress} }, // Update fields
                     { new: true } 
                 );
 
