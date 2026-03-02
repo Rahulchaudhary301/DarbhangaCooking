@@ -107,13 +107,12 @@ const ContractorOrderData = async (req, res) => {
             });
         }
 
-
-         // Find and update the document
+        //  // Find and update the document
                 const updatedData = await OrderModel.findOneAndUpdate(
                     { mobile: order.data.mobile, _id: order.data._id }, // Filter by mobile number and ID
-                    { $set: { ContractorSendTo: true, ContractorName:order.ContractorName ,
-                            ContractorMobile:order.ContractorMobile , ContractorIdd:order.ContractorIdd , 
-                           ContractorAddress:order.ContractorAddress} }, // Update fields
+                    { $set: { ContractorSendTo: true, ContractorName:order.data.ContractorName ,
+                            ContractorMobile:order.data.ContractorMobile , ContractorIdd:order.data.ContractorIdd , 
+                           ContractorAddress:order.data.ContractorAddress} }, // Update fields
                     { new: true } 
                 );
 
@@ -147,14 +146,33 @@ const CancelContractorOrder = async (req, res) => {
                 const updatedData = await OrderModel.findOneAndUpdate(
                     {ContractorIdd : order.ContractorIdd }, // Filter by mobile number and ID
                     { $set: { ContractorSendTo: false, ContractorName:"" ,
-                            ContractorMobile:"" , ContractorIdd:"" } }, // Update fields
+                            ContractorMobile:"" , ContractorIdd:"" , ContractorAddress:"" } }, // Update fields
                     { new: true } 
                 );
 
+             await ContractorOrderModel.findOneAndDelete({ _id:order._id , ContractorId:order.ContractorIdd });
 
         res.status(201).send({ status: true, message: "Cancel Contrator Order successfully", });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
+    }
+};
+
+
+
+
+
+
+
+
+const getAllContractorById = async (req, res) => {
+    try {
+        const order = req.body;
+
+        const Updata = await ContractorOrderModel.find({ContractorId:order.ContractorIdd}).sort({ createdAt: -1 }); // -1 for descending order
+        res.status(201).send({ status: true, data: Updata });
+    } catch (err) {
+        res.status(500).send({ status: false, msg: err.message });
     }
 };
 
@@ -176,4 +194,8 @@ const CancelContractorOrder = async (req, res) => {
 
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor , ContractorOrderData , CancelContractorOrder}
+
+
+
+
+module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor , ContractorOrderData , CancelContractorOrder , getAllContractorById}
