@@ -75,5 +75,25 @@ const ContractorUserLogin = async (req, res) => {
 
 
 
+const getAllContractor = async (req, res) => {
+    try {
+        // Fetch all users sorted by creation time in descending order
+        const data = await ContractorModel.find().sort({ createdAt: -1 }); // -1 for descending order
+        res.status(200).send({ status: true, data: data });
+    } catch (err) {
+        res.status(500).send({ status: false, msg: err.message });
+    }
+};
 
-module.exports = { ContractorUserCrete, ContractorUserLogin }
+
+
+
+
+
+
+
+
+
+
+
+module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor}
