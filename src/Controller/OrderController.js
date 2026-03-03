@@ -170,11 +170,9 @@ const getOrderByNumber = async (req, res) => {
 
     try {
 
-        const { mobile, id } = req.body
+        const { mobile, id , ContractorId} = req.body
 
-        // console.log(mobile)
-
-        const data = await OrderModel.find({ mobile: mobile, _id: id });
+        const data = await OrderModel.find({ ContractorIdd: ContractorId , _id: id });
 
         //  console.log(id ,data)
 
