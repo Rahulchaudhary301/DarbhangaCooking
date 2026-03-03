@@ -141,6 +141,7 @@ const CancelContractorOrder = async (req, res) => {
             });
         }
 
+        //console.log(order)
 
          // Find and update the document
                 const updatedData = await OrderModel.findOneAndUpdate(
@@ -149,6 +150,7 @@ const CancelContractorOrder = async (req, res) => {
                             ContractorMobile:"" , ContractorIdd:"" , ContractorAddress:"" } }, // Update fields
                     { new: true } 
                 );
+
 
              await ContractorOrderModel.findOneAndDelete({ _id:order._id , ContractorId:order.ContractorIdd });
 
