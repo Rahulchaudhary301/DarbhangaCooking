@@ -108,11 +108,15 @@ const getOrderListFromOwner = async (req, res) => {
 
 const RiceUpdateData = async (req, res) => {
   try {
-    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+    const { mobile, id, itemId, RawDataList, MasalaDataList , ContractorId} = req.body;
+
+
+   // console.log(mobile, id, itemId , ContractorId)
+
 
     const updatedOrder = await OrderModel.findOneAndUpdate(
       {
-        mobile: mobile,
+        ContractorIdd: ContractorId,
         _id: id,
       },
       {
