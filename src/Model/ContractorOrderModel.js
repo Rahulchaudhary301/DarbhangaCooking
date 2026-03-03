@@ -67,6 +67,7 @@ const ContractorOrderSchema = new mongoose.Schema({
     SelectedTime: { type: String, required: true },
     OrderType: { type: String, required: true },
     ContractorId: { type: String, required: true },
+    OrderId: { type: String, required: true },
     ContractorOrderStatus:{ type: Boolean, required: true },
     
 
