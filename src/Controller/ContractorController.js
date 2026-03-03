@@ -9,7 +9,7 @@ const ContractorUserCrete = async (req, res) => {
     try {
 
         const user = req.body;
-        const { name, mobile, password , address , aadhar } = user
+        const { name, mobile, password, address, aadhar } = user
 
         // if(!name && !email && !password && !mobile) return   res.status(400).send({ status: false, msg: "All field is require" })
 
@@ -43,7 +43,7 @@ const ContractorUserLogin = async (req, res) => {
     try {
         const data = req.body;
 
-        const {  password, id } = data
+        const { password, id } = data
 
 
         const IsMobile = await ContractorModel.findOne({ _id: id })
@@ -99,7 +99,7 @@ const getAllContractor = async (req, res) => {
 const ContractorOrderData = async (req, res) => {
     try {
         const order = req.body;
-    
+
         if (!order) {
             return res.status(400).send({
                 status: false,
@@ -108,13 +108,17 @@ const ContractorOrderData = async (req, res) => {
         }
 
         //  // Find and update the document
-                const updatedData = await OrderModel.findOneAndUpdate(
-                    { mobile: order.data.mobile, _id: order.data._id }, // Filter by mobile number and ID
-                    { $set: { ContractorSendTo: true, ContractorName:order.data.ContractorName ,
-                            ContractorMobile:order.data.ContractorMobile , ContractorIdd:order.data.ContractorIdd , 
-                           ContractorAddress:order.data.ContractorAddress} }, // Update fields
-                    { new: true } 
-                );
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { mobile: order.data.mobile, _id: order.data._id }, // Filter by mobile number and ID
+            {
+                $set: {
+                    ContractorSendTo: true, ContractorName: order.data.ContractorName,
+                    ContractorMobile: order.data.ContractorMobile, ContractorIdd: order.data.ContractorIdd,
+                    ContractorAddress: order.data.ContractorAddress
+                }
+            }, // Update fields
+            { new: true }
+        );
 
         // Save the new order
         await ContractorOrderModel.create(order.data);
@@ -133,7 +137,7 @@ const ContractorOrderData = async (req, res) => {
 const CancelContractorOrder = async (req, res) => {
     try {
         const order = req.body;
-    
+
         if (!order) {
             return res.status(400).send({
                 status: false,
@@ -143,16 +147,20 @@ const CancelContractorOrder = async (req, res) => {
 
         //console.log(order)
 
-         // Find and update the document
-                const updatedData = await OrderModel.findOneAndUpdate(
-                    {ContractorIdd : order.ContractorIdd }, // Filter by mobile number and ID
-                    { $set: { ContractorSendTo: false, ContractorName:"" ,
-                            ContractorMobile:"" , ContractorIdd:"" , ContractorAddress:"" } }, // Update fields
-                    { new: true } 
-                );
+        // Find and update the document
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd: order.ContractorIdd }, // Filter by mobile number and ID
+            {
+                $set: {
+                    ContractorSendTo: false, ContractorName: "",
+                    ContractorMobile: "", ContractorIdd: "", ContractorAddress: ""
+                }
+            }, // Update fields
+            { new: true }
+        );
 
 
-             await ContractorOrderModel.findOneAndDelete({ _id:order._id , ContractorId:order.ContractorIdd });
+        await ContractorOrderModel.findOneAndDelete({ _id: order._id, ContractorId: order.ContractorIdd });
 
         res.status(201).send({ status: true, message: "Cancel Contrator Order successfully", });
     } catch (err) {
@@ -171,8 +179,13 @@ const getAllContractorById = async (req, res) => {
     try {
         const order = req.body;
 
-        const Updata = await ContractorOrderModel.find({ContractorId:order.ContractorIdd}).sort({ createdAt: -1 }); // -1 for descending order
-        res.status(201).send({ status: true, data: Updata });
+        const orders = await OrderModel.find({
+            ContractorIdd: { $exists: true, $eq: String(order.ContractorIdd) },
+            ContractorMobile: { $exists: true, $eq: String(order.mobile) }}).sort({ createdAt: -1 });
+
+         // console.log(orders)
+
+        res.status(201).send({ status: true, data: orders });
     } catch (err) {
         res.status(500).send({ status: false, msg: err.message });
     }
@@ -200,4 +213,4 @@ const getAllContractorById = async (req, res) => {
 
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin , getAllContractor , ContractorOrderData , CancelContractorOrder , getAllContractorById}
+module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOrderData, CancelContractorOrder, getAllContractorById }
