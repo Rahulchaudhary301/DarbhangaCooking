@@ -15,7 +15,7 @@ const Dall = new mongoose.Schema({
     },
      category: {
         type: String,
-        required: true,
+        
     },
     range: {
         type: [String], // Array of strings for ranges like "100-150"
