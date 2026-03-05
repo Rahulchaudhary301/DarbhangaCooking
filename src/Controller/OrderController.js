@@ -166,7 +166,7 @@ const getAllOrderWithSameNumber = async (req, res) => {
 
 
 
-const getOrderByNumber = async (req, res) => {
+const getOrderByNumberByContrract = async (req, res) => {
 
     try {
 
@@ -175,6 +175,31 @@ const getOrderByNumber = async (req, res) => {
         const data = await OrderModel.find({ ContractorIdd: ContractorId , _id: id });
 
         //  console.log(id ,data)
+
+        res.status(201).send({ status: true, data: data })
+    }
+
+    catch (err) {
+
+        res.status(500).send({ status: false, msg: err.message })
+
+    }
+
+}
+
+
+
+const getOrderByNumber = async (req, res) => {
+
+    try {
+
+        const { mobile, id , ContractorId} = req.body
+
+       // console.log(id ,data)
+
+        const data = await OrderModel.find({ mobile: mobile , _id: id });
+
+          
 
         res.status(201).send({ status: true, data: data })
     }
@@ -664,7 +689,7 @@ const DeleteOrderWithMobileNumberAndId = async (req, res) => {
 
 
 module.exports = {
-    OrderData, getAllOrder, getOrderByNumber, requestForUpdateByNumber, CheckPermission, OrderDataUpdateExtingId, DeleteOrderWithMobileNumberAndId, 
+    OrderData, getAllOrder, getOrderByNumber, requestForUpdateByNumber, CheckPermission, OrderDataUpdateExtingId, DeleteOrderWithMobileNumberAndId, getOrderByNumberByContrract ,
 
     permissionGrant, requestForOderPreairedStatus, PermissionNewOrder, requestForOderPreairedStatusFalse, getAllOrderWithSameNumber, CancelOrderSumited, PermissionForCancelOrber, NotAcceptOrderRequest, DeleteOrderWithMobileNumber
 }

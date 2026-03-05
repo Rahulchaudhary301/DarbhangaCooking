@@ -47,6 +47,10 @@ router.post("/grantRequest",OrderController.permissionGrant)
 
 router.post("/getOrderByNumber",OrderController.getOrderByNumber)
 
+router.post("/getOrderByNumberByContractor",OrderController.getOrderByNumberByContrract)
+
+
+
 router.post("/OrderPrearedTrue",OrderController.requestForOderPreairedStatus)
 
 router.post("/OrderCancel",OrderController.CancelOrderSumited)
