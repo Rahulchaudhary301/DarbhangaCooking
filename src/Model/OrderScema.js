@@ -21,6 +21,23 @@ const MasalaDataListSchema = new mongoose.Schema({
 });
 
 
+// Schema for raw data details
+const TotalRawDataListSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    unit: { type: String, required: true },
+    quantity: { type: String, required: true },
+    belog: { type: String, required: true }, // E.g., "kirana"
+});
+
+// Schema for masala data details
+const TotalMasalaDataListSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+     quantity: { type: String, required: true },
+    unit: { type: String, required: true },
+    belog: { type: String, required: true }, // E.g., "kirana"
+});
+
+
 
 
 // Define the schema for an individual item
@@ -35,10 +52,13 @@ const ItemSchema = new mongoose.Schema({
    // MasalaDataList: { type: [String], default: [] },
     RawDataList: { type: [RawDataListSchema], default: [] }, // Using raw data details schema
     MasalaDataList: { type: [MasalaDataListSchema], default: [] }, // Using masala data details schema
+    TotalRawDataList: { type: [TotalRawDataListSchema], default: [] }, // Using raw data details schema
+    TotalMasalaDataList: { type: [TotalMasalaDataListSchema], default: [] }, // Using masala data details schema
     RawData: { type: [String], required: true },
     MashalaData: { type: [String], required: true },
     RawDataUnit: { type: [String], required: true },
     MashalaDataUnit: { type: [String], required: true },
+    category: { type: [String]},
 });
 
 // Define the schema for an order item category (e.g., Rice, Vegetable)
