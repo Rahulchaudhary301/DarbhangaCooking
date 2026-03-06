@@ -52,8 +52,6 @@ const ItemSchema = new mongoose.Schema({
    // MasalaDataList: { type: [String], default: [] },
     RawDataList: { type: [RawDataListSchema], default: [] }, // Using raw data details schema
     MasalaDataList: { type: [MasalaDataListSchema], default: [] }, // Using masala data details schema
-    TotalRawDataList: { type: [TotalRawDataListSchema], default: [] }, // Using raw data details schema
-    TotalMasalaDataList: { type: [TotalMasalaDataListSchema], default: [] }, // Using masala data details schema
     RawData: { type: [String], required: true },
     MashalaData: { type: [String], required: true },
     RawDataUnit: { type: [String], required: true },
@@ -86,6 +84,8 @@ const OrderSchema = new mongoose.Schema({
     SelectedLocation:{ type: String, required: true },
     SelectedTime: { type: String, required: true },
     OrderType: { type: String, required: true },
+    TotalRawDataList: { type: [TotalRawDataListSchema], default: [] }, // Using raw data details schema
+    TotalMasalaDataList: { type: [TotalMasalaDataListSchema], default: [] }, // Using masala data details schem
     ContractorIdd: { type: String },
     ContractorName: { type: String },
     ContractorMobile: { type: String  },
