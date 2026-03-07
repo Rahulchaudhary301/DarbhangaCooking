@@ -66,7 +66,8 @@ const ItemSchema = new mongoose.Schema({
 const TotalUtensilDataListSchema = new mongoose.Schema({
     img: { type: String, required: true },
     name: { type: String, required: true },
-    selectedQuntity:{ type: String, required: true }
+    selectedQuntity:{ type: String, required: true },
+    selecte:{ type: Boolean, default: false },
     
 });
 
