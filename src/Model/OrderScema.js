@@ -59,6 +59,19 @@ const ItemSchema = new mongoose.Schema({
     category: { type: [String]},
 });
 
+
+
+
+// Define the schema for an Utelsils
+const TotalUtensilDataListSchema = new mongoose.Schema({
+    img: { type: String, required: true },
+    name: { type: String, required: true },
+    selectedQuntity:{ type: String, required: true }
+    
+});
+
+
+
 // Define the schema for an order item category (e.g., Rice, Vegetable)
 const OrderCategorySchema = new mongoose.Schema({
     categoryName: { type: String, required: true }, // E.g., "Rice", "Vegetable"
@@ -86,6 +99,7 @@ const OrderSchema = new mongoose.Schema({
     OrderType: { type: String, required: true },
     TotalRawDataList: { type: [TotalRawDataListSchema], default: [] }, // Using raw data details schema
     TotalMasalaDataList: { type: [TotalMasalaDataListSchema], default: [] }, // Using masala data details schem
+    TotalUtensilDataList: { type: [TotalUtensilDataListSchema], default: [] },
     ContractorIdd: { type: String },
     ContractorName: { type: String },
     ContractorMobile: { type: String  },

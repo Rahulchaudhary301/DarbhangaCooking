@@ -197,6 +197,58 @@ const getAllContractorById = async (req, res) => {
 
 
 
+const SaveAndUpdateAllLists = async (req, res) => {
+    try {
+       
+        const data = req.body;
+
+        const {  mobile,id,ContractorId ,  RawData, MasalaData} = data
+
+        
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd: ContractorId , _id:id  },
+            {
+                $set: {
+                    TotalRawDataList: RawData,
+                    TotalMasalaDataList: MasalaData,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
+
+
+
+const SaveAndUpdateUtensilData = async (req, res) => {
+    try {
+       
+        const data = req.body;
+
+        const {  mobile,id,ContractorId , UtensilsData} = data
+
+        
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd: ContractorId , _id:id  },
+            {
+                $set: {
+                    TotalUtensilDataList: UtensilsData,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
 
 
 
@@ -213,4 +265,13 @@ const getAllContractorById = async (req, res) => {
 
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOrderData, CancelContractorOrder, getAllContractorById }
+
+
+
+
+
+
+
+
+module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor,SaveAndUpdateAllLists , SaveAndUpdateUtensilData ,
+     ContractorOrderData, CancelContractorOrder, getAllContractorById }
