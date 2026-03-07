@@ -251,6 +251,30 @@ const SaveAndUpdateUtensilData = async (req, res) => {
 };
 
 
+const SaveAndUpdateExtraData = async (req, res) => {
+    try {
+       
+        const data = req.body;
+
+        const {  mobile,id,ContractorId , ExtraData} = data
+
+        
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd: ContractorId , _id:id  },
+            {
+                $set: {
+                    TotalExtraDataList: ExtraData,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
 
 
 
@@ -273,5 +297,6 @@ const SaveAndUpdateUtensilData = async (req, res) => {
 
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor,SaveAndUpdateAllLists , SaveAndUpdateUtensilData ,
+
+module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor,SaveAndUpdateAllLists , SaveAndUpdateUtensilData , SaveAndUpdateExtraData,
      ContractorOrderData, CancelContractorOrder, getAllContractorById }
