@@ -82,6 +82,19 @@ const TotalExtraDataListSchema = new mongoose.Schema({
     
 });
 
+const SelectedCookSchema = new mongoose.Schema({
+    img: { type: String, required: true },
+    name: { type: String, required: true },
+    mobile: { type: String, required: true },
+    member:{ type: String, required: true },
+    leader:{ type: String, required: true },
+    experience:{ type: String, required: true },
+    speciality:{ type: String, required: true },
+    selecte:{ type: Boolean, default: false },
+    
+});
+
+
 
 
 // Define the schema for an order item category (e.g., Rice, Vegetable)
@@ -113,11 +126,13 @@ const OrderSchema = new mongoose.Schema({
     TotalMasalaDataList: { type: [TotalMasalaDataListSchema], default: [] }, // Using masala data details schem
     TotalUtensilDataList: { type: [TotalUtensilDataListSchema], default: [] },
     TotalExtraDataList: { type: [TotalExtraDataListSchema], default: [] },
+    SelectCookData: { type: [SelectedCookSchema], default: [] },
     ContractorIdd: { type: String },
     ContractorName: { type: String },
     ContractorMobile: { type: String  },
     ContractorAddress: { type: String  },
     ContractorSendTo: { type: Boolean, required: true },
+    IsContractorPrepaiedOrder:{ type: Boolean, default: false },
     
 
     orderItem: { type: [OrderCategorySchema], required: true }, // List of categories and their items
