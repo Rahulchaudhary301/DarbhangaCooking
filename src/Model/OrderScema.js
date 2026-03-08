@@ -132,6 +132,7 @@ const OrderSchema = new mongoose.Schema({
     ContractorMobile: { type: String  },
     ContractorAddress: { type: String  },
     ContractorSendTo: { type: Boolean, required: true },
+    IsOrderAcceptByContractor:{ type: Boolean, default: false },
     IsContractorPrepaiedOrder:{ type: Boolean, default: false },
     
 

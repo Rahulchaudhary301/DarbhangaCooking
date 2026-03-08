@@ -6,7 +6,8 @@ const OrderItemListController = require('../Controller/OrederListItemController'
 const AllModelController = require('../Controller/AllModelController')
 const ContactController = require('../Controller/ContactController')
 const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOrderData, CancelContractorOrder, getAllContractorById,
-     SaveAndUpdateAllLists, SaveAndUpdateUtensilData, SaveAndUpdateExtraData, SaveAndUpdateCookData, OrderSendToAdminByContractor } = require("../Controller/ContractorController")
+     SaveAndUpdateAllLists, SaveAndUpdateUtensilData, SaveAndUpdateExtraData, SaveAndUpdateCookData, OrderSendToAdminByContractor, 
+     OrderAcceptByContractor} = require("../Controller/ContractorController")
 
 const router= express.Router()
 
@@ -113,6 +114,7 @@ router.post("/SaveAndUpdateUtensilsListByContractor",SaveAndUpdateUtensilData)
 router.post("/SaveAndUpdateExtraListByContractor",SaveAndUpdateExtraData)
 router.post("/SaveAndUpdateCookDataByContractor",SaveAndUpdateCookData)
 router.post("/OrderSendToAdminByContractor",OrderSendToAdminByContractor)
+router.post("/OrderAcceptByContractor",OrderAcceptByContractor)
 
 
 
