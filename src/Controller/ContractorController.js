@@ -373,6 +373,70 @@ const OrderAcceptByContractor = async (req, res) => {
 
 
 
+const RequstForChangeByContractor = async (req, res) => {
+    try {
+       
+        const data = req.body;
+
+      
+
+        const {  mobile,id,ContractorId } = data
+
+        
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd: ContractorId , _id:id  },
+            {
+                $set: {
+                    
+                    IsContractorNeedForChange:true,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+        // console.log(updatedData.IsContractorPrepaiedOrder)
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully"});
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
+
+
+
+
+const AcceptRequstForChangeByContractor = async (req, res) => {
+    try {
+       
+        const data = req.body;
+
+      
+
+        const {  mobile,id,ContractorId } = data
+
+        
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd: ContractorId , _id:id  },
+            {
+                $set: {
+                    
+                    IsContractorNeedForChange:false,
+                     IsContractorPrepaiedOrder:false,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+        // console.log(updatedData.IsContractorPrepaiedOrder)
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully"});
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
+
+
+
 
 
 
@@ -395,4 +459,4 @@ const OrderAcceptByContractor = async (req, res) => {
 
 
 module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor,SaveAndUpdateAllLists , SaveAndUpdateUtensilData , SaveAndUpdateExtraData,SaveAndUpdateCookData,
-   OrderSendToAdminByContractor ,  ContractorOrderData, CancelContractorOrder, getAllContractorById , OrderAcceptByContractor}
+   OrderSendToAdminByContractor , AcceptRequstForChangeByContractor , ContractorOrderData, CancelContractorOrder, getAllContractorById , RequstForChangeByContractor, OrderAcceptByContractor}
