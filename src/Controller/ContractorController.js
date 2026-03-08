@@ -414,9 +414,11 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
         const {  mobile,id,ContractorId } = data
 
+       // console.log(id , mobile)
+
         
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { mobile: mobile , _id:id  },
             {
                 $set: {
                     
