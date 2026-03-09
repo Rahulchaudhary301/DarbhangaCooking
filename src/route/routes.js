@@ -9,7 +9,8 @@ const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOr
      SaveAndUpdateAllLists, SaveAndUpdateUtensilData, SaveAndUpdateExtraData, SaveAndUpdateCookData, OrderSendToAdminByContractor, 
      OrderAcceptByContractor,
      RequstForChangeByContractor,
-     AcceptRequstForChangeByContractor} = require("../Controller/ContractorController")
+     AcceptRequstForChangeByContractor,
+     OrderSendToClinetByAdmin} = require("../Controller/ContractorController")
 
 const router= express.Router()
 
@@ -119,6 +120,7 @@ router.post("/OrderSendToAdminByContractor",OrderSendToAdminByContractor)
 router.post("/OrderAcceptByContractor",OrderAcceptByContractor)
 router.post("/ReqestForChangeOrderByContractor",RequstForChangeByContractor)
 router.post("/AcceptReqestForChangeOrderByContractor",AcceptRequstForChangeByContractor)
+router.post("/OrderSendToClinetByAdmin",OrderSendToClinetByAdmin)
 
 
 

@@ -688,6 +688,7 @@ const DeleteOrderWithMobileNumberAndId = async (req, res) => {
 
 
 
+
 module.exports = {
     OrderData, getAllOrder, getOrderByNumber, requestForUpdateByNumber, CheckPermission, OrderDataUpdateExtingId, DeleteOrderWithMobileNumberAndId, getOrderByNumberByContrract ,
 

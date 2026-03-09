@@ -442,6 +442,39 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
 
 
+const OrderSendToClinetByAdmin = async (req, res) => {
+    try {
+       
+        const data = req.body;
+
+        const {  mobile,id,ContractorId } = data
+
+       // console.log(id , mobile)
+
+        
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { mobile: mobile , _id:id  },
+            {
+                $set: {
+                    
+                    orderPrepaired:true,
+                    orderItemList:true,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+        // console.log(updatedData.IsContractorPrepaiedOrder)
+
+        res.status(201).send({ status: true, message: " Order send  successfully"});
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
+
+
+
+
 
 
 
@@ -461,4 +494,5 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
 
 module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor,SaveAndUpdateAllLists , SaveAndUpdateUtensilData , SaveAndUpdateExtraData,SaveAndUpdateCookData,
-   OrderSendToAdminByContractor , AcceptRequstForChangeByContractor , ContractorOrderData, CancelContractorOrder, getAllContractorById , RequstForChangeByContractor, OrderAcceptByContractor}
+   OrderSendToAdminByContractor , AcceptRequstForChangeByContractor , ContractorOrderData, CancelContractorOrder, OrderSendToClinetByAdmin,
+    getAllContractorById , RequstForChangeByContractor, OrderAcceptByContractor}
