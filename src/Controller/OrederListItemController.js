@@ -86,9 +86,9 @@ const getOrderListFromOwner = async (req, res) => {
 
         // console.log(mobile)
 
-        const data = await OrderListItemModel.find({ id: id });
+        const data = await OrderModel.find({ _id: id , mobile:mobile});
 
-        //  console.log(id, data)
+         // console.log(id, mobile , data)
 
         res.status(201).send({ status: true, data: data })
     }
