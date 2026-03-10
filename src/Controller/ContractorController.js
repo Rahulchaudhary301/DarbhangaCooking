@@ -181,9 +181,10 @@ const getAllContractorById = async (req, res) => {
 
         const orders = await OrderModel.find({
             ContractorIdd: { $exists: true, $eq: String(order.ContractorIdd) },
-            ContractorMobile: { $exists: true, $eq: String(order.mobile) }}).sort({ createdAt: -1 });
+            ContractorMobile: { $exists: true, $eq: String(order.mobile) }
+        }).sort({ createdAt: -1 });
 
-         // console.log(orders)
+        // console.log(orders)
 
         res.status(201).send({ status: true, data: orders });
     } catch (err) {
@@ -197,44 +198,109 @@ const getAllContractorById = async (req, res) => {
 
 
 
+// const SaveAndUpdateAllLists = async (req, res) => {
+//     try {
+
+//         const data = req.body;
+
+//         const {  mobile,id,ContractorId ,  RawData, MasalaData} = data
+
+//         const AllCombileLIst=[...RawData , ...MasalaData]
+
+//         const updatedData = await OrderModel.findOneAndUpdate(
+//             { ContractorIdd: ContractorId , _id:id  },
+//             {
+//                 $set: {
+//                     TotalRawDataList: RawData,
+//                     TotalMasalaDataList: MasalaData,
+//                     TotalRawAndMasalaDataList:AllCombileLIst
+//                 }
+//             }, // Update fields
+//             { new: true }
+//         );
+
+
+//         res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+//     } catch (err) {
+//         res.status(500).send({ status: false, message: err.message });
+//     }
+// };
+
+
+
+
 const SaveAndUpdateAllLists = async (req, res) => {
     try {
-       
-        const data = req.body;
 
-        const {  mobile,id,ContractorId ,  RawData, MasalaData} = data
+        const { mobile, id, ContractorId, RawData = [], MasalaData = [] } = req.body;
 
-        
+        // combine lists safely
+        const AllCombileLIst = [...RawData, ...MasalaData];
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            {
+                ContractorId: ContractorId,   // fixed typo
+                _id: id
+            },
             {
                 $set: {
                     TotalRawDataList: RawData,
                     TotalMasalaDataList: MasalaData,
+                    TotalRawAndMasalaDataList: AllCombileLIst
                 }
-            }, // Update fields
-            { new: true }
+            },
+            {
+                new: true
+            }
         );
 
+        if (!updatedData) {
+            return res.status(404).send({
+                status: false,
+                message: "Order not found"
+            });
+        }
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+        res.status(200).send({
+            status: true,
+            message: "Order list saved and updated successfully",
+            data: updatedData
+        });
+
     } catch (err) {
-        res.status(500).send({ status: false, message: err.message });
+        res.status(500).send({
+            status: false,
+            message: err.message
+        });
     }
 };
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const SaveAndUpdateUtensilData = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-        const {  mobile,id,ContractorId , UtensilsData} = data
+        const { mobile, id, ContractorId, UtensilsData } = data
 
-        
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { ContractorIdd: ContractorId, _id: id },
             {
                 $set: {
                     TotalUtensilDataList: UtensilsData,
@@ -244,7 +310,7 @@ const SaveAndUpdateUtensilData = async (req, res) => {
         );
 
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully", data: updatedData });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -253,14 +319,14 @@ const SaveAndUpdateUtensilData = async (req, res) => {
 
 const SaveAndUpdateExtraData = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-        const {  mobile,id,ContractorId , ExtraData} = data
+        const { mobile, id, ContractorId, ExtraData } = data
 
-        
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { ContractorIdd: ContractorId, _id: id },
             {
                 $set: {
                     TotalExtraDataList: ExtraData,
@@ -270,7 +336,7 @@ const SaveAndUpdateExtraData = async (req, res) => {
         );
 
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully", data: updatedData });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -281,14 +347,14 @@ const SaveAndUpdateExtraData = async (req, res) => {
 
 const SaveAndUpdateCookData = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-        const {  mobile,id,ContractorId , CookData} = data
+        const { mobile, id, ContractorId, CookData } = data
 
-        
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { ContractorIdd: ContractorId, _id: id },
             {
                 $set: {
                     SelectCookData: CookData,
@@ -298,7 +364,7 @@ const SaveAndUpdateCookData = async (req, res) => {
         );
 
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully",data: updatedData });
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully", data: updatedData });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -311,20 +377,20 @@ const SaveAndUpdateCookData = async (req, res) => {
 
 const OrderSendToAdminByContractor = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-      
 
-        const {  mobile,id,ContractorId } = data
 
-        
+        const { mobile, id, ContractorId } = data
+
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { ContractorIdd: ContractorId, _id: id },
             {
                 $set: {
-                    
-                    IsContractorPrepaiedOrder:true,
+
+                    IsContractorPrepaiedOrder: true,
                 }
             }, // Update fields
             { new: true }
@@ -332,7 +398,7 @@ const OrderSendToAdminByContractor = async (req, res) => {
 
         // console.log(updatedData.IsContractorPrepaiedOrder)
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully"});
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully" });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -344,20 +410,20 @@ const OrderSendToAdminByContractor = async (req, res) => {
 
 const OrderAcceptByContractor = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-      
 
-        const {  mobile,id,ContractorId } = data
 
-        
+        const { mobile, id, ContractorId } = data
+
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { ContractorIdd: ContractorId, _id: id },
             {
                 $set: {
-                    
-                    IsOrderAcceptByContractor:true,
+
+                    IsOrderAcceptByContractor: true,
                 }
             }, // Update fields
             { new: true }
@@ -365,7 +431,7 @@ const OrderAcceptByContractor = async (req, res) => {
 
         // console.log(updatedData.IsContractorPrepaiedOrder)
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully"});
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully" });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -375,20 +441,20 @@ const OrderAcceptByContractor = async (req, res) => {
 
 const RequstForChangeByContractor = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-      
 
-        const {  mobile,id,ContractorId } = data
 
-        
+        const { mobile, id, ContractorId } = data
+
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: ContractorId , _id:id  },
+            { ContractorIdd: ContractorId, _id: id },
             {
                 $set: {
-                    
-                    IsContractorNeedForChange:true,
+
+                    IsContractorNeedForChange: true,
                 }
             }, // Update fields
             { new: true }
@@ -396,7 +462,7 @@ const RequstForChangeByContractor = async (req, res) => {
 
         // console.log(updatedData.IsContractorPrepaiedOrder)
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully"});
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully" });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -407,23 +473,23 @@ const RequstForChangeByContractor = async (req, res) => {
 
 const AcceptRequstForChangeByContractor = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-      
 
-        const {  mobile,id,ContractorId } = data
 
-       // console.log(id , mobile)
+        const { mobile, id, ContractorId } = data
 
-        
+        // console.log(id , mobile)
+
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { mobile: mobile , _id:id  },
+            { mobile: mobile, _id: id },
             {
                 $set: {
-                    
-                    IsContractorNeedForChange:false,
-                     IsContractorPrepaiedOrder:false,
+
+                    IsContractorNeedForChange: false,
+                    IsContractorPrepaiedOrder: false,
                 }
             }, // Update fields
             { new: true }
@@ -431,7 +497,7 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
         // console.log(updatedData.IsContractorPrepaiedOrder)
 
-        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully"});
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully" });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -444,21 +510,21 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
 const OrderSendToClinetByAdmin = async (req, res) => {
     try {
-       
+
         const data = req.body;
 
-        const {  mobile,id,ContractorId } = data
+        const { mobile, id, ContractorId } = data
 
-       // console.log(id , mobile)
+        // console.log(id , mobile)
 
-        
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { mobile: mobile , _id:id  },
+            { mobile: mobile, _id: id },
             {
                 $set: {
-                    
-                    orderPrepaired:true,
-                    orderItemList:true,
+
+                    orderPrepaired: true,
+                    orderItemList: true,
                 }
             }, // Update fields
             { new: true }
@@ -466,7 +532,7 @@ const OrderSendToClinetByAdmin = async (req, res) => {
 
         // console.log(updatedData.IsContractorPrepaiedOrder)
 
-        res.status(201).send({ status: true, message: " Order send  successfully"});
+        res.status(201).send({ status: true, message: " Order send  successfully" });
     } catch (err) {
         res.status(500).send({ status: false, message: err.message });
     }
@@ -493,6 +559,8 @@ const OrderSendToClinetByAdmin = async (req, res) => {
 
 
 
-module.exports = { ContractorUserCrete, ContractorUserLogin, getAllContractor,SaveAndUpdateAllLists , SaveAndUpdateUtensilData , SaveAndUpdateExtraData,SaveAndUpdateCookData,
-   OrderSendToAdminByContractor , AcceptRequstForChangeByContractor , ContractorOrderData, CancelContractorOrder, OrderSendToClinetByAdmin,
-    getAllContractorById , RequstForChangeByContractor, OrderAcceptByContractor}
+module.exports = {
+    ContractorUserCrete, ContractorUserLogin, getAllContractor, SaveAndUpdateAllLists, SaveAndUpdateUtensilData, SaveAndUpdateExtraData, SaveAndUpdateCookData,
+    OrderSendToAdminByContractor, AcceptRequstForChangeByContractor, ContractorOrderData, CancelContractorOrder, OrderSendToClinetByAdmin,
+    getAllContractorById, RequstForChangeByContractor, OrderAcceptByContractor
+}

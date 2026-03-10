@@ -38,6 +38,15 @@ const TotalMasalaDataListSchema = new mongoose.Schema({
 });
 
 
+// Schema for masala data details
+const TotalRawAndMasalaDataListSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+     quantity: { type: String, required: true },
+    unit: { type: String, required: true },
+    belog: { type: String, required: true }, // E.g., "kirana"
+});
+
+
 
 
 // Define the schema for an individual item
@@ -124,6 +133,7 @@ const OrderSchema = new mongoose.Schema({
     OrderType: { type: String, required: true },
     TotalRawDataList: { type: [TotalRawDataListSchema], default: [] }, // Using raw data details schema
     TotalMasalaDataList: { type: [TotalMasalaDataListSchema], default: [] }, // Using masala data details schem
+    TotalRawAndMasalaDataList: { type: [TotalRawAndMasalaDataListSchema], default: [] },
     TotalUtensilDataList: { type: [TotalUtensilDataListSchema], default: [] },
     TotalExtraDataList: { type: [TotalExtraDataListSchema], default: [] },
     SelectCookData: { type: [SelectedCookSchema], default: [] },
