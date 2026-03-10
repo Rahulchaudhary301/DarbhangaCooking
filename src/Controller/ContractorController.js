@@ -232,15 +232,9 @@ const getAllContractorById = async (req, res) => {
 const SaveAndUpdateAllLists = async (req, res) => {
     try {
 
-        const { mobile, id, ContractorId, RawData = [], MasalaData = [] } = req.body;
+        const { mobile, id, ContractorId, RawData , MasalaData , AllCombileLIst } = req.body;
 
-        // combine lists safely
-        const AllCombileLIst = [...RawData, ...MasalaData];
-
-        // console.log(RawData)
-        // console.log(MasalaData)
-        // console.log(AllCombileLIst)
-
+       
 
         const updatedData = await OrderModel.findOneAndUpdate(
             {
