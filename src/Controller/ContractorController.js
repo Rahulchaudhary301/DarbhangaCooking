@@ -352,7 +352,6 @@ const SaveAndUpdateCookData = async (req, res) => {
 
         const { mobile, id, ContractorId, CookData } = data
 
-
         const updatedData = await OrderModel.findOneAndUpdate(
             { ContractorIdd: ContractorId, _id: id },
             {
