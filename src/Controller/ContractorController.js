@@ -237,6 +237,11 @@ const SaveAndUpdateAllLists = async (req, res) => {
         // combine lists safely
         const AllCombileLIst = [...RawData, ...MasalaData];
 
+        // console.log(RawData)
+        // console.log(MasalaData)
+        // console.log(AllCombileLIst)
+
+
         const updatedData = await OrderModel.findOneAndUpdate(
             {
                  ContractorIdd: ContractorId,   // fixed typo
