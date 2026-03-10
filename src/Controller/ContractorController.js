@@ -1,6 +1,7 @@
 const ContractorModel = require('../Model/ContractorModel')
 const ContractorOrderModel = require('../Model/ContractorOrderModel')
 const OrderModel = require('../Model/OrderScema')
+const TeemModel = require('../Model/AddTeemSchema')
 const jwt = require('jsonwebtoken')
 
 
@@ -536,16 +537,6 @@ const OrderSendToClinetByAdmin = async (req, res) => {
         res.status(500).send({ status: false, message: err.message });
     }
 };
-
-
-
-
-
-
-
-
-
-
 
 
 

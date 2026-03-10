@@ -5,12 +5,14 @@ const OrderController = require('../Controller/OrderController')
 const OrderItemListController = require('../Controller/OrederListItemController')
 const AllModelController = require('../Controller/AllModelController')
 const ContactController = require('../Controller/ContactController')
+const upload = require("../middleware/upload");
 const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOrderData, CancelContractorOrder, getAllContractorById,
      SaveAndUpdateAllLists, SaveAndUpdateUtensilData, SaveAndUpdateExtraData, SaveAndUpdateCookData, OrderSendToAdminByContractor, 
      OrderAcceptByContractor,
      RequstForChangeByContractor,
      AcceptRequstForChangeByContractor,
      OrderSendToClinetByAdmin} = require("../Controller/ContractorController")
+const { AddTeem, getAllCookTeamById } = require("../Controller/AddTeemController")
 
 const router= express.Router()
 
@@ -122,17 +124,9 @@ router.post("/ReqestForChangeOrderByContractor",RequstForChangeByContractor)
 router.post("/AcceptReqestForChangeOrderByContractor",AcceptRequstForChangeByContractor)
 router.post("/OrderSendToClinetByAdmin",OrderSendToClinetByAdmin)
 
+router.post("/AddTeemData", upload.single("profile"), AddTeem)
+router.post("/getAllTeam", getAllCookTeamById)
 
-
-//router.post("/books",middleware.authenticate,BooksController.createBooks)
-//router.get("/books",BooksController.getBooksData)
-//router.get("/books/:bookId",middleware.authenticate,BooksController.getBooksDataWithReviews)
-
-//router.put("/books/:bookId",middleware.authenticate,middleware.authorize,BooksController.updateBooksData)
-//router.delete("/books/:bookId",middleware.authenticate,middleware.authorize,BooksController.deleteBooksData)
-//router.post("/books/:bookId/review",ReviewController.createReview)
-//router.put("/books/:bookId/review/:reviewId",ReviewController.updateReviews)
-//router.delete("/books/:bookId/review/:reviewId",ReviewController.deleteReviews)
 
 
 

@@ -92,11 +92,12 @@ const TotalExtraDataListSchema = new mongoose.Schema({
 });
 
 const SelectedCookSchema = new mongoose.Schema({
-    img: { type: String, required: true },
-    name: { type: String, required: true },
+    
+    profilePic: { type: String, required: true },
+    teamName: { type: String, required: true },
     mobile: { type: String, required: true },
     member:{ type: String, required: true },
-    leader:{ type: String, required: true },
+    leaderName:{ type: String, required: true },
     experience:{ type: String, required: true },
     speciality:{ type: String, required: true },
     selecte:{ type: Boolean, default: false },
