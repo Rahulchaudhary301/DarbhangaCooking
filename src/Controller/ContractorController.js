@@ -239,7 +239,7 @@ const SaveAndUpdateAllLists = async (req, res) => {
 
         const updatedData = await OrderModel.findOneAndUpdate(
             {
-                ContractorId: ContractorId,   // fixed typo
+                 ContractorIdd: ContractorId,   // fixed typo
                 _id: id
             },
             {
