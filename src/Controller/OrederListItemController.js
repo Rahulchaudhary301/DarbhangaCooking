@@ -111,7 +111,7 @@ const RiceUpdateData = async (req, res) => {
     const { mobile, id, itemId, RawDataList, MasalaDataList , ContractorId} = req.body;
 
 
-   // console.log(mobile, id, itemId , ContractorId)
+  //  console.log(mobile, id, itemId , ContractorId)
 
 
     const updatedOrder = await OrderModel.findOneAndUpdate(
