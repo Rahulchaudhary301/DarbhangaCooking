@@ -489,6 +489,8 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
                     IsContractorNeedForChange: false,
                     IsContractorPrepaiedOrder: false,
+                    orderPrepaired: false , 
+                    orderItemList:false
                 }
             }, // Update fields
             { new: true }
