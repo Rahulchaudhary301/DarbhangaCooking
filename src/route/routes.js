@@ -13,6 +13,7 @@ const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOr
      AcceptRequstForChangeByContractor,
      OrderSendToClinetByAdmin} = require("../Controller/ContractorController")
 const { AddTeem, getAllCookTeamById } = require("../Controller/AddTeemController")
+const { ContractorBillCrete } = require("../Controller/BillingController")
 
 const router= express.Router()
 
@@ -123,6 +124,10 @@ router.post("/OrderAcceptByContractor",OrderAcceptByContractor)
 router.post("/ReqestForChangeOrderByContractor",RequstForChangeByContractor)
 router.post("/AcceptReqestForChangeOrderByContractor",AcceptRequstForChangeByContractor)
 router.post("/OrderSendToClinetByAdmin",OrderSendToClinetByAdmin)
+router.post("/billcreateByContractor", ContractorBillCrete)
+
+
+
 
 router.post("/AddTeemData", upload.single("profile"), AddTeem)
 router.post("/getAllTeam", getAllCookTeamById)

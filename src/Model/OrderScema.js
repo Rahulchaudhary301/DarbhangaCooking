@@ -119,6 +119,7 @@ const OrderCategorySchema = new mongoose.Schema({
 const OrderSchema = new mongoose.Schema({
     name: { type: String, required: true },
     mobile: { type: String, required: true },
+    status: { type: String  },
     clientRequest: { type: Boolean, required: true },
     requsetGrant: { type: Boolean, required: true },
     orderPrepaired:{ type: Boolean, required: true },
