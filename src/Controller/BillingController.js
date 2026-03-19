@@ -275,6 +275,30 @@ const unlockNewChargePermission = async (req, res) => {
 
 
 
+const AdminConfirmAmountwithContractor = async (req, res) => {
+    try {
+
+        const data = req.body;
+
+        const { orderId ,contractorId } = data
+       
+        const updatedData = await OrderModel.findOneAndUpdate(
+            { ContractorIdd:contractorId , _id: orderId },
+            {
+                $set: {                    
+                  IsAmountConfirmFromcontractor: true,
+                }
+            }, // Update fields
+            { new: true }
+        );
+
+        // console.log(updatedData.IsContractorPrepaiedOrder)
+
+        res.status(201).send({ status: true, message: "Cancel Contrator Order successfully" });
+    } catch (err) {
+        res.status(500).send({ status: false, message: err.message });
+    }
+};
 
 
 
@@ -298,11 +322,4 @@ const unlockNewChargePermission = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission };
+module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission , AdminConfirmAmountwithContractor };
