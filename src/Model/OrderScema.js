@@ -147,6 +147,7 @@ const OrderSchema = new mongoose.Schema({
     IsOrderAcceptByContractor:{ type: Boolean, default: false },
     IsContractorPrepaiedOrder:{ type: Boolean, default: false },
     IsContractorNeedForChange:{ type: Boolean, default: false },
+    IsAmountConfirmFromcontractor:{ type: Boolean, default: false },
     
 
     orderItem: { type: [OrderCategorySchema], required: true }, // List of categories and their items
