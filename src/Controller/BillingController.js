@@ -312,6 +312,8 @@ const upsertAdminBilling = async (req, res) => {
     try {
         const { orderId, baseAmount, extras } = req.body;
 
+        console.log(extras)
+
         let bill = await BillingModel.findOne({ orderId });
 
         if (!bill) {

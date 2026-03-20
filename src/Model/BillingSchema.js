@@ -52,6 +52,7 @@ const OrderBillSchema = new mongoose.Schema(
             extras: [
                 {
                     name: String,
+                    Quantity: String,
                     amount: Number
                 }
             ],
@@ -67,7 +68,6 @@ const OrderBillSchema = new mongoose.Schema(
             breakdown: [
                 {
                     name: String,
-                    Quantity: String,
                     amount: Number,
                     source: {
                         type: String,
