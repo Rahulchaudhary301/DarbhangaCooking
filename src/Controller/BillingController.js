@@ -307,6 +307,72 @@ const AdminConfirmAmountwithContractor = async (req, res) => {
 
 
 
+// CREATE / UPDATE ADMIN BILLING
+const upsertAdminBilling = async (req, res) => {
+    try {
+        const { orderId, baseAmount, extras } = req.body;
+
+        let bill = await BillingModel.findOne({ orderId });
+
+        if (!bill) {
+            return res.status(404).json({ message: "Order bill not found" });
+        }
+
+        // 🔥 Calculate totals
+        const extraTotal = extras.reduce((sum, e) => sum + Number(e.amount), 0);
+        const finalTotal = Number(baseAmount) + extraTotal;
+
+        const contractorTotal = bill.contractorBilling?.total || 0;
+        const profit = finalTotal - contractorTotal;
+
+        // 🔥 Update admin billing
+        bill.adminBilling = {
+            baseAmount,
+            extras,
+            extraTotal,
+            finalTotal,
+            profit,
+            locked: false,
+            finalizedAt: null
+        };
+
+        await bill.save();
+
+        res.status(200).json({
+            message: "Admin billing saved",
+            data: bill.adminBilling
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
+
+
+
+
+
+const getAdminBilling = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+
+        const bill = await BillingModel.findOne({ orderId });
+
+        if (!bill) {
+            return res.status(404).json({ message: "Bill not found" });
+        }
+
+        res.status(200).json({
+            adminBilling: bill.adminBilling || null
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
 
 
 
@@ -322,4 +388,8 @@ const AdminConfirmAmountwithContractor = async (req, res) => {
 
 
 
-module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission , AdminConfirmAmountwithContractor };
+
+module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, 
+     upsertAdminBilling, getAdminBilling,
+    
+    unlockNewChargePermission , AdminConfirmAmountwithContractor };

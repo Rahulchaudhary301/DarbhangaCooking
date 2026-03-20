@@ -67,6 +67,7 @@ const OrderBillSchema = new mongoose.Schema(
             breakdown: [
                 {
                     name: String,
+                    Quantity: String,
                     amount: Number,
                     source: {
                         type: String,

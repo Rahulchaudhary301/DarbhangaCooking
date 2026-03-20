@@ -13,7 +13,7 @@ const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOr
      AcceptRequstForChangeByContractor,
      OrderSendToClinetByAdmin} = require("../Controller/ContractorController")
 const { AddTeem, getAllCookTeamById } = require("../Controller/AddTeemController")
-const { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission, AdminConfirmAmountwithContractor } = require("../Controller/BillingController")
+const { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission, AdminConfirmAmountwithContractor, upsertAdminBilling, getAdminBilling } = require("../Controller/BillingController")
 
 const router= express.Router()
 
@@ -138,6 +138,9 @@ router.post("/getBillByAdmin", getBillById)
 router.post("/unlockContractorChargeByAdmin", unlockContractorCharge)
 router.post("/unlockNewChargePermissionByAdmin", unlockNewChargePermission)
 router.post("/AdminConfirmAmountwithContractorByAdmin", AdminConfirmAmountwithContractor)
+
+router.post("/admin-billing", upsertAdminBilling);
+router.get("/admin-billing/:orderId", getAdminBilling);
 
 
 
