@@ -340,6 +340,31 @@ const upsertAdminBilling = async (req, res) => {
 
         await bill.save();
 
+         const contractorTotals = bill.contractorBilling?.total || 0;
+         const AdminTotal = bill.adminBilling?.finalTotal || 0;
+
+
+         bill.clientBilling = {
+            finalAmount:contractorTotals + AdminTotal
+        };
+
+        await bill.save();
+
+        const FinalAmounts= bill.clientBilling.finalAmount
+        const PaidAmounts= bill.payment.paidAmount
+        const sta = FinalAmounts-PaidAmounts > 0 ? "Pending":"Paid"
+
+         bill.payment = {
+            paidAmount :PaidAmounts,
+            pendingAmount:FinalAmounts-PaidAmounts,
+           // status: sta,
+
+        };
+
+         await bill.save();
+
+
+
         res.status(200).json({
             message: "Admin billing saved",
             data: bill.adminBilling
@@ -375,6 +400,14 @@ const getAdminBilling = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+
+
+
+
+
+
+
 
 
 
