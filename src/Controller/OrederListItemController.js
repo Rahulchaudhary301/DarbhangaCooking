@@ -1,6 +1,7 @@
 
 const { default: mongoose } = require('mongoose');
 const OrderListItemModel = require('../Model/OrederListForClientsModel')
+const BillingModel = require('../Model/BillingSchema');
 const RiceModel =require('../Model/RiceModel')
 const OrderModel = require('../Model/OrderScema')
 
@@ -87,10 +88,12 @@ const getOrderListFromOwner = async (req, res) => {
         // console.log(mobile)
 
         const data = await OrderModel.find({ _id: id , mobile:mobile});
+         const Billdata = await BillingModel.find({ orderId: id });
+        
 
-         // console.log(id, mobile , data)
+         // console.log( data , Billdata)
 
-        res.status(201).send({ status: true, data: data })
+        res.status(201).send({ status: true, data: data , BillData:Billdata})
     }
 
     catch (err) {
