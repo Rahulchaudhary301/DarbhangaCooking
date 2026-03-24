@@ -30,3 +30,26 @@ app.use("/",route)
 app.listen(process.env.PORT || 5000, function(){
     console.log("express app is running on port" +(process.env.PORT || 5000))
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
