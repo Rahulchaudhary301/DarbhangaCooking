@@ -146,11 +146,11 @@ const CancelContractorOrder = async (req, res) => {
             });
         }
 
-        //console.log(order)
+      //  console.log(order)
 
         // Find and update the document
-        const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd: order.ContractorIdd }, // Filter by mobile number and ID
+         await OrderModel.findOneAndUpdate(
+            { ContractorIdd: order.ContractorIdd , _id: order._id, }, // Filter by mobile number and ID
             {
                 $set: {
                     ContractorSendTo: false, ContractorName: "",
@@ -160,6 +160,7 @@ const CancelContractorOrder = async (req, res) => {
             { new: true }
         );
 
+     //   console.log(updatedData)
 
         await ContractorOrderModel.findOneAndDelete({ _id: order._id, ContractorId: order.ContractorIdd });
 
