@@ -44,9 +44,6 @@ const RiceData = async (req, res) => {
         }
 
 
-
-
-
         // Add the mobile key to each document, and remove the _id field to avoid duplicates
         const RiceWithMobile = SelectedRice.map(item => {
             const { _id, ...rest } = item;  // Remove _id if it exists
@@ -222,7 +219,7 @@ const AllRiceData = async (req, res) => {
         const nonVej = await NonVegModel.find({ mobile: mobile });
         const papadChips = await PapadChipsModel.find({ mobile: mobile });
         const chutneyPickle = await ChutneyPickleModel.find({ mobile: mobile });
-        const icecReam = await IceCreamModel.find({ mobile: mobile });
+        const iceCreams = await IceCreamModel.find({ mobile: mobile });
 
         const coldDrinks = await ColdDrinksModel.find({ mobile: mobile });
         const hotDrinks = await HotDrinksModel.find({ mobile: mobile });
@@ -235,7 +232,7 @@ const AllRiceData = async (req, res) => {
 
         res.status(201).send({ status: true, message: "Data fetch successfully" , rice: rice, vegetable: vegetable, roti: roti, dall: dall ,
                               salad:salad , raita:raita,  sweets:sweets, pakorda:pakorda, nonVej:nonVej, papadChips:papadChips, chutneyPickle:chutneyPickle,          
-                                      icecReam:icecReam, coldDrinks:coldDrinks, hotDrinks:hotDrinks, indianStater:indianStater, chinesStater:chinesStater,
+                                      iceCreams:iceCreams, coldDrinks:coldDrinks, hotDrinks:hotDrinks, indianStater:indianStater, chinesStater:chinesStater,
 
          });
     } catch (err) {
@@ -264,6 +261,21 @@ const AllDataDelete = async (req, res) => {
         await vegetableModel.deleteMany({ mobile });
         await rotiModel.deleteMany({ mobile });
         await dallModel.deleteMany({ mobile });
+
+        await SaladModel.deleteMany({ mobile });
+        await RaitaModel.deleteMany({ mobile });
+        await SweetsModel.deleteMany({ mobile });
+        await PakordaModel.deleteMany({ mobile });
+
+        await NonVegModel.deleteMany({ mobile });
+        await PapadChipsModel.deleteMany({ mobile });
+        await ChutneyPickleModel.deleteMany({ mobile });
+        await IceCreamModel.deleteMany({ mobile });
+
+        await ColdDrinksModel.deleteMany({ mobile });
+        await IndianStaterModel.deleteMany({ mobile });
+        await ChainesstaterModel.deleteMany({ mobile });
+        await HotDrinksModel.deleteMany({ mobile });
 
 
         res.status(201).send({ status: true, message: "Delete data successfully"});
