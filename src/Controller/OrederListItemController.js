@@ -296,6 +296,550 @@ const RotiUpdateData = async (req, res) => {
 
 
 
+const SaladUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Salad" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+
+const RaitaUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Raita" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+const SweetsUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Sweets" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+const PakoraUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "Bachaka" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+const NonVejUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "NonVeg" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+const PapadChipsUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "PapadChips" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+const ChutneyPicklesUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "ChutneyPickle" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+const IceCreamsUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "IceCream" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+
+const ColdDrinksUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "ColdDrink" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+const HotDrinksUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "HotDrinks" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+
+const IndianStaterUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "IndianStatrter" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
+
+
+
+
+
+
+
+const ChinesStaterUpdateData = async (req, res) => {
+  try {
+    const { mobile, id, itemId, RawDataList, MasalaDataList } = req.body;
+
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      {
+        mobile: mobile,
+        _id: id,
+      },
+      {
+        $set: {
+          "orderItem.$[cat].items.$[item].RawDataList": RawDataList || [],
+          "orderItem.$[cat].items.$[item].MasalaDataList": MasalaDataList || []
+        }
+      },
+      {
+        new: true,
+        arrayFilters: [
+          { "cat.categoryName": "ChinesStatrter" },
+          { "item._id": itemId }
+        ]
+      }
+    );
+
+
+   // console.log(updatedOrder.orderItem[0].items[1])
+
+    if (!updatedOrder) {
+      return res.status(404).send({ msg: "Order not found" });
+    }
+
+    res.status(200).send({
+      message: "Masala & Raw list saved successfully ✅",
+      data: updatedOrder,
+    });
+
+  } catch (err) {
+    res.status(500).send({ status: false, msg: err.message });
+  }
+};
 
 
 
@@ -309,4 +853,12 @@ const RotiUpdateData = async (req, res) => {
 
 
 
-module.exports = { OrderListItem, getOrderListFromOwner , RiceUpdateData  , DallUpdateData , VegetableUpdateData , RotiUpdateData}
+module.exports = { OrderListItem, getOrderListFromOwner , RiceUpdateData  , DallUpdateData , VegetableUpdateData , RotiUpdateData ,
+
+  SaladUpdateData , RaitaUpdateData , SweetsUpdateData , PakoraUpdateData , NonVejUpdateData ,
+
+  PapadChipsUpdateData , ChutneyPicklesUpdateData , IceCreamsUpdateData , ColdDrinksUpdateData ,
+
+  HotDrinksUpdateData , IndianStaterUpdateData, ChinesStaterUpdateData
+
+}

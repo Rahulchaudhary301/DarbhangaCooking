@@ -106,6 +106,23 @@ router.put("/DallListUpdate",OrderItemListController.DallUpdateData)
 router.put("/VegetableListUpdate",OrderItemListController.VegetableUpdateData)
 router.put("/RotiListUpdate",OrderItemListController.RotiUpdateData)
 
+router.put("/SweetsListUpdate",OrderItemListController.SweetsUpdateData)
+router.put("/NonVejListUpdate",OrderItemListController.NonVejUpdateData)
+router.put("/BachkkaListUpdate",OrderItemListController.PakoraUpdateData)
+router.put("/SaladListUpdate",OrderItemListController.SaladUpdateData)
+
+router.put("/RaitaListUpdate",OrderItemListController.RaitaUpdateData)
+router.put("/PapadChipsListUpdate",OrderItemListController.PapadChipsUpdateData)
+router.put("/ChutneyPicklesListUpdate",OrderItemListController.ChutneyPicklesUpdateData)
+router.put("/IceCreamListUpdate",OrderItemListController.IceCreamsUpdateData)
+
+router.put("/ColdDrinksListUpdate",OrderItemListController.ColdDrinksUpdateData)
+router.put("/HotDrinksListUpdate",OrderItemListController.HotDrinksUpdateData)
+router.put("/IndianStaterListUpdate",OrderItemListController.IndianStaterUpdateData)
+router.put("/ChinesstaterListUpdate",OrderItemListController.ChinesStaterUpdateData)
+
+
+
 
 
 
