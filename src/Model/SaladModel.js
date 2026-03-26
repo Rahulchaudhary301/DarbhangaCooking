@@ -29,6 +29,13 @@ const Salad = new mongoose.Schema({
         type: String,
         default: "",
     },
+
+     customMember: {
+        type: String,
+        default: "",
+    },
+
+    
     RawDataList: {
         type: [mongoose.Schema.Types.Mixed], // Array to hold raw data objects (if any structure)
         default: [],
