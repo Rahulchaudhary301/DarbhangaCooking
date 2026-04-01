@@ -167,7 +167,10 @@ const ContractorUserLogin = async (req, res) => {
             mobile: IsMobile.mobile,
             address: IsMobile.address,
             aadhar: IsMobile.aadhar,
-            userId: IsMobile._id
+            userId: IsMobile._id,
+            profilePic:IsMobile.profilePic,
+            isDeleted:IsMobile.isDeleted
+
 
         };
         res.status(201).send({ status: true, token: token, userId: IsMobile._id, data: ContractorData })
