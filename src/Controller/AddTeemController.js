@@ -14,13 +14,13 @@ const AddTeem = async (req, res) => {
 
         if (!req.file) {
             return res.status(400).json({
-                success:false,
-                message:"Profile image required"
+                success: false,
+                message: "Profile image required"
             });
         }
 
-        const result = await cloudinary.uploader.upload(req.file.path,{
-            folder:"team_profiles"
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "team_profiles"
         });
 
         const team = new Team({
@@ -30,7 +30,7 @@ const AddTeem = async (req, res) => {
             mobile: req.body.mobile,
             experience: req.body.experience,
             speciality: req.body.speciality,
-            contractorId:req.body.contractorId,
+            contractorId: req.body.contractorId,
             profilePic: result.secure_url
 
         });
@@ -38,9 +38,9 @@ const AddTeem = async (req, res) => {
         await team.save();
 
         res.json({
-            success:true,
-            message:"Team Added Successfully",
-            data:team
+            success: true,
+            message: "Team Added Successfully",
+            data: team
         });
 
     } catch (err) {
@@ -48,8 +48,8 @@ const AddTeem = async (req, res) => {
         console.log(err);
 
         res.status(500).json({
-            success:false,
-            message:err.message
+            success: false,
+            message: err.message
         });
 
     }
@@ -65,18 +65,69 @@ const getAllCookTeamById = async (req, res) => {
         const order = req.body;
 
         const orders = await Team.find({
-           contractorId:order.ContractorId
+            contractorId: order.ContractorId,
+            isDeleted: false   // 👈 important filter
         }).sort({ createdAt: -1 });
 
-        // console.log(orders)
+        res.status(200).send({
+            status: true,
+            data: orders
+        });
 
-        res.status(201).send({ status: true, data: orders });
     } catch (err) {
-        res.status(500).send({ status: false, msg: err.message });
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        });
     }
 };
 
 
 
 
-module.exports = { AddTeem , getAllCookTeamById };
+
+const DeleteTeamByContractor = async (req, res) => {
+    try {
+
+        const { id } = req.body;
+
+       // console.log(id)
+
+        if (!id) {
+            return res.status(400).send({
+                status: false,
+                msg: "Team ID is required"
+            });
+        }
+
+        const updatedData = await Team.findByIdAndUpdate(
+            id,
+            { isDeleted: true },
+            { new: true } // updated data return karega
+        );
+
+        if (!updatedData) {
+            return res.status(404).send({
+                status: false,
+                msg: "Team member not found"
+            });
+        }
+
+        res.status(200).send({
+            status: true,
+            msg: "Team member deleted (soft delete)",
+            data: updatedData
+        });
+
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        });
+    }
+};
+
+
+
+
+module.exports = { AddTeem, getAllCookTeamById , DeleteTeamByContractor };

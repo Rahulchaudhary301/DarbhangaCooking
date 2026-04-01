@@ -212,95 +212,6 @@ const getAllContractor = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const ContractorOrderData = async (req, res) => {
     try {
         const order = req.body;
@@ -758,5 +669,5 @@ const OrderSendToClinetByAdmin = async (req, res) => {
 module.exports = {
     ContractorUserCrete, ContractorUserLogin, getAllContractor, SaveAndUpdateAllLists, SaveAndUpdateUtensilData, SaveAndUpdateExtraData, SaveAndUpdateCookData,
     OrderSendToAdminByContractor, AcceptRequstForChangeByContractor, ContractorOrderData, CancelContractorOrder, OrderSendToClinetByAdmin,
-    getAllContractorById, RequstForChangeByContractor, OrderAcceptByContractor
+    getAllContractorById, RequstForChangeByContractor, OrderAcceptByContractor 
 }
