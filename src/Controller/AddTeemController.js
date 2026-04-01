@@ -1,6 +1,13 @@
 const Team = require("../Model/AddTeemSchema");
 const cloudinary = require("../Cloudi");
 
+
+
+
+
+
+
+
 const AddTeem = async (req, res) => {
 
     try {

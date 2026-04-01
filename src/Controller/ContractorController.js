@@ -3,36 +3,143 @@ const ContractorOrderModel = require('../Model/ContractorOrderModel')
 const OrderModel = require('../Model/OrderScema')
 const TeemModel = require('../Model/AddTeemSchema')
 const jwt = require('jsonwebtoken')
+const cloudinary = require("../Cloudi");
+
+
+
+
+
+
+
+
+
+
+// const ContractorUserCrete = async (req, res) => {
+
+//     try {
+
+//         const user = req.body;
+//         const { name, mobile, password, address, aadhar } = user
+
+//         // if(!name && !email && !password && !mobile) return   res.status(400).send({ status: false, msg: "All field is require" })
+
+//         const isMobile = await ContractorModel.findOne({ mobile: mobile })
+//         if (isMobile) return res.status(400).send({ status: false, msg: "this Mobile is already in Use" })
+
+//         const isAadhar = await ContractorModel.findOne({ aadhar: aadhar })
+//         if (isAadhar) return res.status(400).send({ status: false, msg: "this Aadhar is already in Use" })
+
+//         const data = await ContractorModel.create(user)
+//         res.status(201).send({ status: true, data: data })
+
+
+//     }
+
+//     catch (err) {
+
+//         res.status(500).send({ status: false, msg: err.message })
+
+//     }
+
+// }
+
+
+
+
+
+
+
+
+// router.post( "/ContractorRegister", upload.single("profile"), // 👈 same name frontend se
+//     async (req, res) => {
+//         try {
+
+
+
+//         } 
+//     }
+// );
+
+
+
 
 
 const ContractorUserCrete = async (req, res) => {
 
     try {
 
-        const user = req.body;
-        const { name, mobile, password, address, aadhar } = user
 
-        // if(!name && !email && !password && !mobile) return   res.status(400).send({ status: false, msg: "All field is require" })
 
-        const isMobile = await ContractorModel.findOne({ mobile: mobile })
-        if (isMobile) return res.status(400).send({ status: false, msg: "this Mobile is already in Use" })
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Profile image required"
+            });
+        }
 
-        const isAadhar = await ContractorModel.findOne({ aadhar: aadhar })
-        if (isAadhar) return res.status(400).send({ status: false, msg: "this Aadhar is already in Use" })
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "Contractor_profiles"
+        });
 
-        const data = await ContractorModel.create(user)
-        res.status(201).send({ status: true, data: data })
+
+
+
+        const { name, mobile, address, aadhar, password } = req.body;
+
+      //  console.log(name, mobile, address, aadhar, password)
+
+        const profilePic = req.file ? req.file.filename : "";
+
+        const newContractor = new ContractorModel({
+            name,
+            mobile,
+            address,
+            aadhar,
+            password,
+            profilePic: result.secure_url
+        });
+
+
+        const data = await ContractorModel.create(newContractor)
+
+        res.send({
+            status: true,
+            msg: "Registered Successfully",
+            status: true,
+            data: data
+        });
 
 
     }
 
     catch (err) {
-
-        res.status(500).send({ status: false, msg: err.message })
-
+        console.log(err);
+        res.status(500).send({
+            status: false,
+            msg: "Error in registration"
+        });
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -97,6 +204,100 @@ const getAllContractor = async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const ContractorOrderData = async (req, res) => {
     try {
         const order = req.body;
@@ -146,11 +347,11 @@ const CancelContractorOrder = async (req, res) => {
             });
         }
 
-      //  console.log(order)
+        //  console.log(order)
 
         // Find and update the document
-         await OrderModel.findOneAndUpdate(
-            { ContractorIdd: order.ContractorIdd , _id: order._id, }, // Filter by mobile number and ID
+        await OrderModel.findOneAndUpdate(
+            { ContractorIdd: order.ContractorIdd, _id: order._id, }, // Filter by mobile number and ID
             {
                 $set: {
                     ContractorSendTo: false, ContractorName: "",
@@ -160,7 +361,7 @@ const CancelContractorOrder = async (req, res) => {
             { new: true }
         );
 
-     //   console.log(updatedData)
+        //   console.log(updatedData)
 
         await ContractorOrderModel.findOneAndDelete({ _id: order._id, ContractorId: order.ContractorIdd });
 
@@ -234,13 +435,13 @@ const getAllContractorById = async (req, res) => {
 const SaveAndUpdateAllLists = async (req, res) => {
     try {
 
-        const { mobile, id, ContractorId, RawData , MasalaData , AllCombileLIst } = req.body;
+        const { mobile, id, ContractorId, RawData, MasalaData, AllCombileLIst } = req.body;
 
-       
+
 
         const updatedData = await OrderModel.findOneAndUpdate(
             {
-                 ContractorIdd: ContractorId,   // fixed typo
+                ContractorIdd: ContractorId,   // fixed typo
                 _id: id
             },
             {
@@ -490,8 +691,8 @@ const AcceptRequstForChangeByContractor = async (req, res) => {
 
                     IsContractorNeedForChange: false,
                     IsContractorPrepaiedOrder: false,
-                    orderPrepaired: false , 
-                    orderItemList:false
+                    orderPrepaired: false,
+                    orderItemList: false
                 }
             }, // Update fields
             { new: true }

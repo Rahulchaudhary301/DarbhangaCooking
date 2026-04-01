@@ -126,7 +126,7 @@ router.put("/ChinesstaterListUpdate",OrderItemListController.ChinesStaterUpdateD
 
 
 
-router.post("/ContractorRegister",ContractorUserCrete)
+router.post("/ContractorRegister",  upload.single("profile"), ContractorUserCrete)
 router.post("/ContractorLogin",ContractorUserLogin)
 router.get("/getAllContractor", getAllContractor)
 router.post("/sendContractorOrder",ContractorOrderData)
