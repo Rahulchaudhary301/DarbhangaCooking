@@ -433,9 +433,16 @@ const upsertContractorAmountBilling = async (req, res) => {
         });
 
         
-        await bill.save();
+    
 
         const contractorTotal = bill.contractorBilling?.total || 0;
+        const ContractorTotalWithPlateForm5percent = contractorTotal - (contractorTotal * 0.05)
+
+          bill.totalwithplateformcharge = ContractorTotalWithPlateForm5percent
+
+          await bill.save();
+
+          const contractorTotalPending = bill.contractorBilling?.totalwithplateformcharge || 0;
 
         // ✅ calculate only success payments
         const totalHistoryAmount = bill.contractorBilling.paidAmount.reduce((sum, e) => {
@@ -443,7 +450,7 @@ const upsertContractorAmountBilling = async (req, res) => {
         }, 0);
 
         // ✅ pending calculation
-        const contractorPendingAmount = contractorTotal - totalHistoryAmount;
+        const contractorPendingAmount = contractorTotalPending - totalHistoryAmount;
 
         bill.contractorBilling.pendingAmount = contractorPendingAmount;
 
