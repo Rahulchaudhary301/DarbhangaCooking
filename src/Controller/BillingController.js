@@ -409,6 +409,7 @@ const upsertAdminBilling = async (req, res) => {
 
 
 
+
 const upsertContractorAmountBilling = async (req, res) => {
     try {
         const { orderId, contractorId, ContractorPaidAmount, status } = req.body;
@@ -424,29 +425,32 @@ const upsertContractorAmountBilling = async (req, res) => {
             bill.contractorBilling.paidAmount = [];
         }
 
-        // ✅ push new payment
+        // ✅ push new payment (history maintain)
         bill.contractorBilling.paidAmount.push({
             amount: Number(ContractorPaidAmount),
             status: status || "success",
             date: new Date()
         });
 
-        // ✅ 🔥 IMPORTANT: use FIXED TOTAL AMOUNT (NOT pending)
-        const contractorTotalAmount = bill.contractorBilling.totalAmount || 0;
+        
+        await bill.save();
 
-        // ✅ sum only successful payments
-        const totalPaid = bill.contractorBilling.paidAmount.reduce((sum, e) => {
+        const contractorTotal = bill.contractorBilling?.total || 0;
+
+        // ✅ calculate only success payments
+        const totalHistoryAmount = bill.contractorBilling.paidAmount.reduce((sum, e) => {
             return e.status === "success" ? sum + Number(e.amount) : sum;
         }, 0);
 
-        // ✅ calculate pending correctly
-        const pendingAmount = contractorTotalAmount - totalPaid;
+        // ✅ pending calculation
+        const contractorPendingAmount = contractorTotal - totalHistoryAmount;
 
-        // ✅ update fields
-        bill.contractorBilling.totalPaidAmount = totalPaid;
-        bill.contractorBilling.pendingAmount = pendingAmount < 0 ? 0 : pendingAmount;
+        bill.contractorBilling.pendingAmount = contractorPendingAmount;
 
-        await bill.save();
+        bill.contractorBilling.totalPaidAmount = totalHistoryAmount;
+        
+
+        await bill.save(); // ✅ single save
 
         res.status(200).json({
             message: "Contractor billing updated successfully",
@@ -458,6 +462,24 @@ const upsertContractorAmountBilling = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
