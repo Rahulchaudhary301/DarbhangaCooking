@@ -53,7 +53,7 @@ const OrderBillSchema = new mongoose.Schema(
 
             pendingAmount: { type: Number, default: 0 },
             totalPaidAmount: { type: Number, default: 0 },
-            
+
             total: { type: Number, default: 0 },
             IsUpdate: {
                 type: Boolean,
@@ -99,14 +99,22 @@ const OrderBillSchema = new mongoose.Schema(
         },
 
         payment: {
-            paidAmount: { type: Number, default: 0 },
+            TotalAmount: { type: Number, default: 0 },
+            paidAmount: [
+                {
+                    amount: { type: Number, required: true },
+                    date: { type: Date, default: Date.now },
+                    status: {
+                        type: String,
+                        enum: ["success", "pending", "failed"],
+                        default: "pending"
+                    }
+                }
+            ],
+
+
             pendingAmount: { type: Number, default: 0 },
-            method: String,
-            status: {
-                type: String,
-                enum: ["pending", "partial", "paid"],
-                default: "pending"
-            }
+            totalPaidAmount: { type: Number, default: 0 },
         },
 
         status: {
