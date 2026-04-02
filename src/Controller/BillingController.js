@@ -426,7 +426,7 @@ const upsertContractorAmountBilling = async (req, res) => {
             date: new Date()
         });
 
-        const contractorTotal = bill.contractorBilling?.total || 0;
+        const contractorTotal = bill.contractorBilling?.pendingAmount || 0;
 
         // ✅ calculate only success payments
         const totalHistoryAmount = bill.contractorBilling.paidAmount.reduce((sum, e) => {
