@@ -36,10 +36,10 @@ const OrderBillSchema = new mongoose.Schema(
                     }
                 }
             ],
-            total: {
-                type: Number,
-                default: 0
-            },
+
+            paidAmount: { type: Number, default: 0 },
+            pendingAmount: { type: Number, default: 0 },
+            total: { type: Number, default: 0 },
              IsUpdate: {
                         type: Boolean,
                         default: false
