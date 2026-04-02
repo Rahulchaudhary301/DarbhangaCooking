@@ -84,7 +84,7 @@ const ContractorBillCrete = async (req, res) => {
                     total,
                     IsUpdate: true,
                     submittedAt: new Date(),
-                    pendingAmount:total
+                    pendingAmount:Math.round(total * 0.05)
                 },
 
                 status: "quoted",
