@@ -382,6 +382,103 @@ const upsertAdminBilling = async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const upsertContractorAmountBilling = async (req, res) => {
+    try {
+        const { orderId, contractorId, ContractorPaidAmount, status } = req.body;
+
+        let bill = await BillingModel.findOne({ orderId });
+
+        if (!bill) {
+            return res.status(404).json({ message: "Order bill not found" });
+        }
+
+        // ✅ ensure array exists
+        if (!bill.contractorBilling.paidAmount) {
+            bill.contractorBilling.paidAmount = [];
+        }
+
+        // ✅ push new payment (history maintain)
+        bill.contractorBilling.paidAmount.push({
+            amount: Number(ContractorPaidAmount),
+            status: status || "success",
+            date: new Date()
+        });
+
+        const contractorTotal = bill.contractorBilling?.total || 0;
+
+        // ✅ calculate only success payments
+        const totalHistoryAmount = bill.contractorBilling.paidAmount.reduce((sum, e) => {
+            return e.status === "success" ? sum + Number(e.amount) : sum;
+        }, 0);
+
+        // ✅ pending calculation
+        const contractorPendingAmount = contractorTotal - totalHistoryAmount;
+
+        bill.contractorBilling.pendingAmount = contractorPendingAmount;
+
+        await bill.save(); // ✅ single save
+
+        res.status(200).json({
+            message: "Contractor billing updated successfully",
+            data: bill.contractorBilling
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getAdminBilling = async (req, res) => {
     try {
         const { orderId } = req.params;
@@ -427,4 +524,4 @@ const getAdminBilling = async (req, res) => {
 module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, 
      upsertAdminBilling, getAdminBilling,
     
-    unlockNewChargePermission , AdminConfirmAmountwithContractor };
+    unlockNewChargePermission , AdminConfirmAmountwithContractor , upsertContractorAmountBilling };
