@@ -80,6 +80,7 @@ const OrderBillSchema = new mongoose.Schema(
 
         clientBilling: {
             finalAmount: { type: Number, default: 0 },
+            finalAmountWithGST: { type: Number, default: 0 },
             breakdown: [
                 {
                     name: String,

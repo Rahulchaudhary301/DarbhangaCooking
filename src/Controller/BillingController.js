@@ -351,7 +351,8 @@ const upsertAdminBilling = async (req, res) => {
 
 
          bill.clientBilling = {
-            finalAmount: TotalBillIncludeGST
+            finalAmount: TotalBill,
+            finalAmountWithGST: TotalBillIncludeGST
         };
 
         await bill.save();
