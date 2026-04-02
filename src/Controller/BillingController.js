@@ -83,7 +83,8 @@ const ContractorBillCrete = async (req, res) => {
                     charges: cleanedCharges,
                     total,
                     IsUpdate: true,
-                    submittedAt: new Date()
+                    submittedAt: new Date(),
+                    pendingAmount:total
                 },
 
                 status: "quoted",
