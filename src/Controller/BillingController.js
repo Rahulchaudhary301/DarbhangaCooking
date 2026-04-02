@@ -343,10 +343,13 @@ const upsertAdminBilling = async (req, res) => {
 
          const contractorTotals = bill.contractorBilling?.total || 0;
          const AdminTotal = bill.adminBilling?.finalTotal || 0;
+         const TotalBill = contractorTotals + AdminTotal  
+
+         const TotalBillIncludeGST = Math.round(TotalBill * 0.05)
 
 
          bill.clientBilling = {
-            finalAmount:contractorTotals + AdminTotal
+            finalAmount: TotalBillIncludeGST
         };
 
         await bill.save();
@@ -470,6 +473,71 @@ const upsertContractorAmountBilling = async (req, res) => {
 
 
 
+const upsertClientsAmountBilling = async (req, res) => {
+    try {
+        const { orderId, contractorId, ClientsPaidAmount, status } = req.body;
+
+        let bill = await BillingModel.findOne({ orderId });
+
+        if (!bill) {
+            return res.status(404).json({ message: "Order bill not found" });
+        }
+
+        // ✅ ensure array exists
+        if (!bill.payment.paidAmount) {
+            bill.payment.paidAmount = [];
+        }
+
+        // ✅ push new payment (history maintain)
+        bill.payment.paidAmount.push({
+            amount: Number(ClientsPaidAmount),
+            status: status || "success",
+            date: new Date()
+        });
+
+        const clientTotal = bill.payment?.pendingAmount || 0;
+
+        // ✅ calculate only success payments
+        const totalHistoryAmount = bill.payment.paidAmount.reduce((sum, e) => {
+            return e.status === "success" ? sum + Number(e.amount) : sum;
+        }, 0);
+
+        // ✅ pending calculation
+        const clientPendingAmount = clientTotal - totalHistoryAmount;
+
+        bill.payment.pendingAmount = clientPendingAmount;
+
+        bill.payment.totalPaidAmount = totalHistoryAmount;
+        
+
+        await bill.save(); // ✅ single save
+
+        res.status(200).json({
+            message: "Client billing updated successfully",
+            data: bill
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -528,4 +596,4 @@ const getAdminBilling = async (req, res) => {
 module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, 
      upsertAdminBilling, getAdminBilling,
     
-    unlockNewChargePermission , AdminConfirmAmountwithContractor , upsertContractorAmountBilling };
+    unlockNewChargePermission , AdminConfirmAmountwithContractor , upsertContractorAmountBilling  , upsertClientsAmountBilling};

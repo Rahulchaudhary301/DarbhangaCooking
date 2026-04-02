@@ -112,7 +112,6 @@ const OrderBillSchema = new mongoose.Schema(
                 }
             ],
 
-
             pendingAmount: { type: Number, default: 0 },
             totalPaidAmount: { type: Number, default: 0 },
         },
