@@ -361,7 +361,7 @@ const upsertAdminBilling = async (req, res) => {
 
         await bill.save();
 
-        const FinalAmounts= bill.clientBilling.finalAmount
+        const FinalAmounts= bill.clientBilling.finalAmountWithGST
         const PaidAmounts= bill.payment.paidAmount
         const sta = FinalAmounts-PaidAmounts > 0 ? "Pending":"Paid"
 
@@ -439,7 +439,7 @@ const upsertContractorAmountBilling = async (req, res) => {
         
           await bill.save();
 
-          
+
 
           const contractorTotalPending = bill.contractorBilling?.totalwithplateformcharge || 0;
 
