@@ -326,7 +326,7 @@ const upsertAdminBilling = async (req, res) => {
         const finalTotal = Number(baseAmount) + extraTotal;
 
         const contractorTotal = bill.contractorBilling?.total || 0;
-       // const profit = finalTotal - contractorTotal;
+        const profit = finalTotal - contractorTotal;
 
         // 🔥 Update admin billing
         bill.adminBilling = {
