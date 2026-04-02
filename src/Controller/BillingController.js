@@ -79,12 +79,16 @@ const ContractorBillCrete = async (req, res) => {
                 orderId: order._id.toString(),
                 contractorId: order.ContractorIdd, // ⚠️ confirm field
 
+
+
+
                 contractorBilling: {
                     charges: cleanedCharges,
                     total,
                     IsUpdate: true,
                     submittedAt: new Date(),
-                    pendingAmount: total - Math.round(total * 0.05)
+                    pendingAmount: total - Math.round(total * 0.05),
+                    totalwithplateformcharge: total - Math.round(total * 0.05)
                 },
 
                 status: "quoted",
@@ -433,14 +437,9 @@ const upsertContractorAmountBilling = async (req, res) => {
         });
 
         
-    
-
-        const contractorTotal = bill.contractorBilling?.total || 0;
-        const ContractorTotalWithPlateForm5percent = contractorTotal - (contractorTotal * 0.05)
-
-          bill.totalwithplateformcharge = ContractorTotalWithPlateForm5percent
-
           await bill.save();
+
+          
 
           const contractorTotalPending = bill.contractorBilling?.totalwithplateformcharge || 0;
 
