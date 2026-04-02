@@ -437,6 +437,9 @@ const upsertContractorAmountBilling = async (req, res) => {
 
         bill.contractorBilling.pendingAmount = contractorPendingAmount;
 
+        bill.contractorBilling.totalPaidAmount = totalHistoryAmount;
+        
+
         await bill.save(); // ✅ single save
 
         res.status(200).json({
