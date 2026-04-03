@@ -326,10 +326,12 @@ const upsertAdminBilling = async (req, res) => {
         }
 
         // 🔥 Calculate totals
-        const extraTotal = extras.reduce((sum, e) => sum + Number(e.amount), 0);
+              const extraTotal = extras.reduce((sum, e) => sum + Number(e.amount), 0);
+
         const finalTotal = Number(baseAmount) + extraTotal;
 
         const contractorTotal = bill.contractorBilling?.total || 0;
+
         const profit = finalTotal - contractorTotal;
 
         // 🔥 Update admin billing
@@ -366,6 +368,7 @@ const upsertAdminBilling = async (req, res) => {
         const sta = FinalAmounts-PaidAmounts > 0 ? "Pending":"Paid"
 
          bill.payment = {
+            TotalAmount:FinalAmounts,
             paidAmount :PaidAmounts,
             pendingAmount:FinalAmounts-PaidAmounts,
            // status: sta,
@@ -524,7 +527,11 @@ const upsertClientsAmountBilling = async (req, res) => {
             date: new Date()
         });
 
-        const clientTotal = bill.payment?.pendingAmount || 0;
+
+        await bill.save();
+
+
+        const clientTotal = bill.payment?.TotalAmount || 0;
 
         // ✅ calculate only success payments
         const totalHistoryAmount = bill.payment.paidAmount.reduce((sum, e) => {
