@@ -330,9 +330,9 @@ const upsertAdminBilling = async (req, res) => {
 
         const finalTotal = Number(baseAmount) + extraTotal;
 
-        const contractorTotal = bill.contractorBilling?.total || 0;
+        // const contractorTotal = bill.contractorBilling?.total || 0;
 
-        const profit = finalTotal - contractorTotal;
+      
 
         // 🔥 Update admin billing
         bill.adminBilling = {
@@ -340,7 +340,6 @@ const upsertAdminBilling = async (req, res) => {
             extras,
             extraTotal,
             finalTotal,
-            profit,
             locked: false,
             finalizedAt: null
         };
@@ -363,9 +362,11 @@ const upsertAdminBilling = async (req, res) => {
 
         await bill.save();
 
+
+
         const FinalAmounts= bill.clientBilling.finalAmountWithGST
         const PaidAmounts= bill.payment.paidAmount
-        const sta = FinalAmounts-PaidAmounts > 0 ? "Pending":"Paid"
+       
 
          bill.payment = {
             TotalAmount:FinalAmounts,
@@ -376,6 +377,30 @@ const upsertAdminBilling = async (req, res) => {
         };
 
          await bill.save();
+
+       
+
+
+
+        const clientTotal = bill.payment?.TotalAmount || 0;
+
+        // ✅ calculate only success payments
+        const totalHistoryAmount = bill.payment.paidAmount.reduce((sum, e) => {
+            return e.status === "success" ? sum + Number(e.amount) : sum;
+        }, 0);
+
+
+
+        // ✅ pending calculation
+        const clientPendingAmount = clientTotal - totalHistoryAmount;
+
+        bill.payment.pendingAmount = clientPendingAmount;
+
+        bill.payment.totalPaidAmount = totalHistoryAmount;
+        
+
+        await bill.save(); 
+
 
 
 
@@ -546,7 +571,10 @@ const upsertClientsAmountBilling = async (req, res) => {
         bill.payment.totalPaidAmount = totalHistoryAmount;
         
 
-        await bill.save(); // ✅ single save
+        await bill.save(); 
+
+
+
 
         res.status(200).json({
             message: "Client billing updated successfully",
