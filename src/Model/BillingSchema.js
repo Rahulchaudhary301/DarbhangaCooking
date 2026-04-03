@@ -9,10 +9,7 @@ const OrderBillSchema = new mongoose.Schema(
             unique: true
         },
 
-        // clientId: {
-        //   type: String,
-        //   required: true
-        // },
+      
 
         contractorId: {
             type: String,
