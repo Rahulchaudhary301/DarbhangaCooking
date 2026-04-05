@@ -1259,6 +1259,75 @@ const uploadPaymentProofByClients = async (req, res) => {
 
 
 
+const uploadPaymentProofByContracor = async (req, res) => {
+    try {
+        const { userId, MoodOfPayment } = req.body;
+
+        // ✅ Validation
+        if (!userId) {
+            return res.status(400).json({
+                message: "User ID is required",
+            });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                message: "Payment screenshot is required",
+            });
+        }
+
+        // ✅ Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "Contractor_Payment_Record",
+        });
+
+        // ✅ Use Cloudinary URL (IMPORTANT)
+        const newRecord = {
+            ScreenShotLink: result.secure_url, // ✔ correct
+            MoodOfPayment: MoodOfPayment || "QR",
+            PaymentAtdAt: new Date(),
+        };
+
+        // ✅ Save in DB
+        const updatedUser = await BillingModel.findByIdAndUpdate(
+            userId,
+            {
+                $push: {
+                    ContractorPaymentRecord: newRecord,
+                },
+            },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        // ✅ Success response
+        res.status(200).json({
+            message: "Payment proof uploaded successfully",
+            data: newRecord,
+        });
+
+    } catch (error) {
+        console.error("Upload Error:", error);
+
+        res.status(500).json({
+            message: error.message || "Server error",
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1303,7 +1372,7 @@ const uploadPaymentProofByClients = async (req, res) => {
 
 module.exports = {
     ContractorBillCrete, getBillById, unlockContractorCharge,
-    upsertAdminBilling, getAdminBilling, uploadPaymentProofByClients ,
+    upsertAdminBilling, getAdminBilling, uploadPaymentProofByClients , uploadPaymentProofByContracor ,
 
     unlockNewChargePermission, AdminConfirmAmountwithContractor, upsertContractorAmountBilling, upsertClientsAmountBilling
 };

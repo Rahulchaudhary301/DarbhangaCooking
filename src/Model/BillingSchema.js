@@ -47,6 +47,15 @@ const OrderBillSchema = new mongoose.Schema(
                 }
             ],
 
+             ContractorPaymentRecord: [
+            {
+                 ScreenShotLink:String,
+                 MoodOfPayment:String,
+                 PaymentAtdAt: Date,
+
+            }
+        ],  
+
              
             pendingAmount: { type: Number, default: 0 },
             totalPaidAmount: { type: Number, default: 0 },
