@@ -1263,6 +1263,9 @@ const uploadPaymentProofByContracor = async (req, res) => {
     try {
         const { userId, MoodOfPayment } = req.body;
 
+
+       // console.log(userId, MoodOfPayment)
+
         // ✅ Validation
         if (!userId) {
             return res.status(400).json({
@@ -1293,12 +1296,11 @@ const uploadPaymentProofByContracor = async (req, res) => {
             userId,
             {
                 $push: {
-                    ContractorPaymentRecord: newRecord,
+                    "contractorBilling.ContractorPaymentRecord": newRecord,
                 },
             },
             { new: true }
         );
-
         if (!updatedUser) {
             return res.status(404).json({
                 message: "User not found",
@@ -1372,7 +1374,7 @@ const uploadPaymentProofByContracor = async (req, res) => {
 
 module.exports = {
     ContractorBillCrete, getBillById, unlockContractorCharge,
-    upsertAdminBilling, getAdminBilling, uploadPaymentProofByClients , uploadPaymentProofByContracor ,
+    upsertAdminBilling, getAdminBilling, uploadPaymentProofByClients, uploadPaymentProofByContracor,
 
     unlockNewChargePermission, AdminConfirmAmountwithContractor, upsertContractorAmountBilling, upsertClientsAmountBilling
 };
