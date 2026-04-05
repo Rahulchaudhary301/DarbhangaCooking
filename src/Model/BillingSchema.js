@@ -119,7 +119,16 @@ const OrderBillSchema = new mongoose.Schema(
             type: String,
             enum: ["created", "quoted", "finalized", "completed"],
             default: "created"
-        }
+        },
+
+         ClientPaymentRecord: [
+            {
+                 ScreenShotLink:String,
+                 MoodOfPayment:String,
+                 PaymentAtdAt: Date,
+
+            }
+        ],   
     },
     { timestamps: true }
 );

@@ -14,7 +14,7 @@ const { ContractorUserCrete, ContractorUserLogin, getAllContractor, ContractorOr
      OrderSendToClinetByAdmin,
      getAllMemberByContractorId} = require("../Controller/ContractorController")
 const { AddTeem, getAllCookTeamById, DeleteTeamByContractor } = require("../Controller/AddTeemController")
-const { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission, AdminConfirmAmountwithContractor, upsertAdminBilling, getAdminBilling, upsertContractorAmountBilling, upsertClientsAmountBilling } = require("../Controller/BillingController")
+const { ContractorBillCrete, getBillById, unlockContractorCharge, unlockNewChargePermission, AdminConfirmAmountwithContractor, upsertAdminBilling, getAdminBilling, upsertContractorAmountBilling, upsertClientsAmountBilling, uploadPaymentProofByClients } = require("../Controller/BillingController")
 
 const router= express.Router()
 
@@ -148,6 +148,7 @@ router.post("/billcreateByContractor", ContractorBillCrete)
 
 
 router.post("/AddTeemData", upload.single("profile"), AddTeem)
+router.post("/ClientsBillPaymentProof", upload.single("paymentScreenshot"), uploadPaymentProofByClients)
 router.post("/getAllTeam", getAllCookTeamById)
 router.post("/DeleteTeamMemberByContractor", DeleteTeamByContractor)
 // router.post("/getAllTeamByContractor", getAllMemberByContractorId)

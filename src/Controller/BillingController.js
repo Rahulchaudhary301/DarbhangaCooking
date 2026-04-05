@@ -1,7 +1,7 @@
 
 const OrderModel = require('../Model/OrderScema');
 const BillingModel = require('../Model/BillingSchema');
-
+const cloudinary = require("../Cloudi");
 
 
 
@@ -392,7 +392,7 @@ const ContractorBillCrete = async (req, res) => {
 
                 status: "quoted"
             });
-        } 
+        }
         // =========================
         // 🔄 UPDATE
         // =========================
@@ -684,13 +684,13 @@ const AdminConfirmAmountwithContractor = async (req, res) => {
 
         const data = req.body;
 
-        const { orderId ,contractorId } = data
-       
+        const { orderId, contractorId } = data
+
         const updatedData = await OrderModel.findOneAndUpdate(
-            { ContractorIdd:contractorId , _id: orderId },
+            { ContractorIdd: contractorId, _id: orderId },
             {
-                $set: {                    
-                  IsAmountConfirmFromcontractor: true,
+                $set: {
+                    IsAmountConfirmFromcontractor: true,
                 }
             }, // Update fields
             { new: true }
@@ -941,7 +941,7 @@ const AdminConfirmAmountwithContractor = async (req, res) => {
 //             date: new Date()
 //         });
 
-        
+
 //           await bill.save();
 
 
@@ -959,7 +959,7 @@ const AdminConfirmAmountwithContractor = async (req, res) => {
 //         bill.contractorBilling.pendingAmount = contractorPendingAmount;
 
 //         bill.contractorBilling.totalPaidAmount = totalHistoryAmount;
-        
+
 
 //         await bill.save(); // ✅ single save
 
@@ -1122,9 +1122,9 @@ const upsertClientsAmountBilling = async (req, res) => {
         bill.payment.pendingAmount = clientPendingAmount;
 
         bill.payment.totalPaidAmount = totalHistoryAmount;
-        
 
-        await bill.save(); 
+
+        await bill.save();
 
 
 
@@ -1190,6 +1190,66 @@ const getAdminBilling = async (req, res) => {
 
 
 
+const uploadPaymentProofByClients = async (req, res) => {
+    try {
+        const { userId, MoodOfPayment } = req.body;
+
+        // ✅ Validation
+        if (!userId) {
+            return res.status(400).json({
+                message: "User ID is required",
+            });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                message: "Payment screenshot is required",
+            });
+        }
+
+        // ✅ Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "Client_Payment_Record",
+        });
+
+        // ✅ Use Cloudinary URL (IMPORTANT)
+        const newRecord = {
+            ScreenShotLink: result.secure_url, // ✔ correct
+            MoodOfPayment: MoodOfPayment || "QR",
+            PaymentAtdAt: new Date(),
+        };
+
+        // ✅ Save in DB
+        const updatedUser = await BillingModel.findByIdAndUpdate(
+            userId,
+            {
+                $push: {
+                    ClientPaymentRecord: newRecord,
+                },
+            },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        // ✅ Success response
+        res.status(200).json({
+            message: "Payment proof uploaded successfully",
+            data: newRecord,
+        });
+
+    } catch (error) {
+        console.error("Upload Error:", error);
+
+        res.status(500).json({
+            message: error.message || "Server error",
+        });
+    }
+};
 
 
 
@@ -1210,7 +1270,40 @@ const getAdminBilling = async (req, res) => {
 
 
 
-module.exports = { ContractorBillCrete, getBillById, unlockContractorCharge, 
-     upsertAdminBilling, getAdminBilling,
-    
-    unlockNewChargePermission , AdminConfirmAmountwithContractor , upsertContractorAmountBilling  , upsertClientsAmountBilling};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = {
+    ContractorBillCrete, getBillById, unlockContractorCharge,
+    upsertAdminBilling, getAdminBilling, uploadPaymentProofByClients ,
+
+    unlockNewChargePermission, AdminConfirmAmountwithContractor, upsertContractorAmountBilling, upsertClientsAmountBilling
+};
